@@ -1,7 +1,7 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
 	"image": "ghcr.io/ludeeus/devcontainer/integration:stable",
-	"name": "Blueprint integration development",
+	"name": "MJ Dashboard",
 	"context": "..",
 	"appPort": [
 		"9123:8123"
@@ -23,8 +23,8 @@
 		"python.linting.enabled": true,
 		"python.formatting.provider": "black",
 		"editor.formatOnPaste": false,
-		"editor.formatOnSave": true,
-		"editor.formatOnType": true,
+		"editor.formatOnSave": false,
+		"editor.formatOnType": false,
 		"files.trimTrailingWhitespace": true
 	}
 }

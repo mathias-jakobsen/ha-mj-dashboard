@@ -1,0 +1,38 @@
+
+{
+    "title": "MJ Dashboard",
+    "config": {
+        "abort": {
+            "already_configured": "Integration has already been configured."
+        },
+        "step": {
+            "user": {
+                "title": "MJ Dashboard",
+                "description": "Once you have added the integration, use the options button to configure it.",
+                "data": {
+                    "sidepanel_title": "Sidepanel Title",
+                    "sidepanel_icon": "Sidepanel Icon",
+                    "language": "Language",
+                    "themes_path": "Path to Themes Directory",
+                    "user_config_path": "Path to Configuration Directory"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "MJ Dashboard",
+                "description": "From here you can configure settings of the integration.",
+                "data": {
+                    "sidepanel_title": "Sidepanel Title",
+                    "sidepanel_icon": "Sidepanel Icon",
+                    "language": "Language",
+                    "themes_path": "Path to Themes Directory",
+                    "user_config_path": "Path to Configuration Directory",
+                    "install_custom_cards": "Install Custom Cards"
+                }
+            }
+        }
+    }
+}

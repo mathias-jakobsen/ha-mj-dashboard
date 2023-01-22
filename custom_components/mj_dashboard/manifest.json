@@ -1,0 +1,10 @@
+{
+  "config_flow": true,
+  "domain": "mj_dashboard",
+  "name": "MJ Dashboard",
+  "documentation": "",
+  "dependencies": ["lovelace"],
+  "codeowners": [],
+  "requirements": ["jinja2"],
+  "version": "1"
+}
