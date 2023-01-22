@@ -14,7 +14,8 @@
                     "sidepanel_icon": "Sidepanel Icon",
                     "language": "Language",
                     "themes_path": "Path to Themes Directory",
-                    "user_config_path": "Path to Configuration Directory"
+                    "user_config_path": "Path to Configuration Directory",
+                    "install_custom_cards": "Install Custom Cards"
                 }
             }
         }

@@ -1,0 +1,3 @@
+button_card_templates: !include_dir_merge_named templates/button_card/
+title: MJ Dashboard
+views: !include_dir_merge_list  views/

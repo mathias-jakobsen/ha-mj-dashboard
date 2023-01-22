@@ -50,7 +50,7 @@ class MJ_Config:
         return vol.Schema({
             vol.Required("sidepanel_title", default=self.sidepanel_title): TextSelector(TextSelectorConfig()),
             vol.Required("sidepanel_icon", default=self.sidepanel_icon): IconSelector(IconSelectorConfig(placeholder=self.sidepanel_icon)),
-            vol.Required("language", default=self.language): SelectSelector(SelectSelectorConfig(mode=SelectSelectorMode.DROPDOWN)),
+            vol.Required("language", default=self.language): SelectSelector(SelectSelectorConfig(mode=SelectSelectorMode.DROPDOWN, options=self.LANGUAGES)),
             vol.Required("themes_path", default=self.themes_path): TextSelector(TextSelectorConfig()),
             vol.Required("user_config_path", default=self.user_config_path): TextSelector(TextSelectorConfig()),
             vol.Required("install_custom_cards", default=self.install_custom_cards): BooleanSelector(BooleanSelectorConfig())

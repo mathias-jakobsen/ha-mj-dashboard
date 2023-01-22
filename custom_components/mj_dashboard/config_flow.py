@@ -4,12 +4,11 @@
 
 from __future__ import annotations
 from .const import DOMAIN
-from .config.mj_config import MJ_Config
+from .core.config import MJ_Config
 from .utils.logger import LOGGER
 from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
-from typing import Union
 
 
 #-----------------------------------------------------------#
@@ -46,7 +45,7 @@ class MD_ConfigFlow(ConfigFlow, domain=DOMAIN):
     #       Methods
     #--------------------------------------------#
 
-    async def async_step_user(self, user_input: Union[dict, None] = None) -> FlowResult:
+    async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
         if len(self._async_current_entries()) > 0:
             return self.async_abort(reason=ABORT_REASON_ALREADY_CONFIGURED)
 
@@ -76,7 +75,7 @@ class MD_OptionsFlow(OptionsFlow):
     #       Steps - Init
     #--------------------------------------------#
 
-    async def async_step_init(self, user_input: Union[dict, None] = None) -> FlowResult:
+    async def async_step_init(self, user_input: dict | None = None) -> FlowResult:
         """ Called when configuring the options from the UI. """
         if user_input is not None:
             return self.async_create_entry(title=DOMAIN, data=user_input)
