@@ -17,6 +17,13 @@ DASHBOARD_URL = f"{DOMAIN.replace('_', '-')}"
 
 
 #-----------------------------------------------------------#
+#       Media Queries
+#-----------------------------------------------------------#
+
+MEDIA_QUERY_MOBILE = "(max-width: 869px)"
+
+
+#-----------------------------------------------------------#
 #       Resources
 #-----------------------------------------------------------#
 
@@ -43,5 +50,5 @@ TRANSLATIONS_PATH = f"custom_components/{DOMAIN}/lovelace/translations"
 #       YAML Parser
 #-----------------------------------------------------------#
 
-PARSER_KEYWORD = "# {DOMAIN}"
+PARSER_KEYWORD = f"# {DOMAIN}"
 PARSER_KEY_GLOBAL = "mj"

@@ -1,0 +1,3 @@
+mj_update_card:
+  template: mj_entity_card
+  show_entity_picture: true

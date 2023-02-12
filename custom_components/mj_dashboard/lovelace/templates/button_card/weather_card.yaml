@@ -1,0 +1,7 @@
+mj_weather_card:
+  template: mj_entity_card
+  icon: >
+    [[[
+      const state = entity.state.replace("partlycloudy", "partly-cloudy");
+      return `mdi:weather-${state}`;
+    ]]]

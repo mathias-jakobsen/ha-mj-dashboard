@@ -1,0 +1,32 @@
+mj_title_card:
+  variables:
+    mj_subtitle_font_size: 16px
+    mj_title_font_size: 18px
+
+  show_icon: false
+  show_label: true
+  show_name: false
+  show_state: true
+
+  tap_action:
+    action: none
+
+  styles:
+    card:
+      - background: none
+      - border-radius: 0
+      - box-shadow: none
+      - margin: 5px 5px 0 5px
+      - padding: 0
+    grid:
+      - grid-template: >
+          "l"
+          "s"
+    label:
+      - color: var(--primary-text-color)
+      - font-size: "[[[ return variables.mj_title_font_size; ]]]"
+      - place-self: center start
+    state:
+      - color: var(--secondary-text-color)
+      - font-size: "[[[ return variables.mj_subtitle_font_size; ]]]"
+      - place-self: center start

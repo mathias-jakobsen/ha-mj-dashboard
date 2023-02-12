@@ -1,0 +1,5 @@
+# mj_dashboard
+
+{% if mj.paths.custom_button_card_templates %}
+!include_dir_merge_named {{ mj.paths.custom_button_card_templates }}
+{% endif %}

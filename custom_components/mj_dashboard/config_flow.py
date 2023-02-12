@@ -5,7 +5,7 @@
 from __future__ import annotations
 from .const import DOMAIN
 from .core.config import MJ_Config
-from .utils.logger import LOGGER
+from .core.logger import LOGGER
 from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult

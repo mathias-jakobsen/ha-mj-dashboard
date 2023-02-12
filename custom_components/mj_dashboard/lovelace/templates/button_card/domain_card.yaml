@@ -1,0 +1,10 @@
+mj_domain_card:
+  template: mj_entity_card
+
+  variables:
+    mj_color_icon: true
+    mj_navigation_path: null
+
+  tap_action:
+    action: "[[[ return variables.mj_navigation_path !== null ? 'navigate' : 'none'; ]]]"
+    navigation_path: "[[[ return variables.mj_navigation_path; ]]]"

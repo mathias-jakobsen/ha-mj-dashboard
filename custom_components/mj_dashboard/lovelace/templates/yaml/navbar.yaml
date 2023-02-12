@@ -1,0 +1,62 @@
+# mj_dashboard
+
+view_layout:
+  grid-area: navbar
+type: custom:mod-card
+style: |
+  ha-card {
+    background: var(--app-header-background-color);
+    border-top: var(--app-header-border-bottom);
+    border-radius: 0;
+    height: 100%;
+  }
+
+  @mediaquery {{ mj.media_query.mobile }} {
+    ha-card {
+      background: var(--primary-background-color);
+      border-left: var(--app-header-border-bottom);
+      border-top: none;
+    }
+  }
+card:
+  type: custom:layout-card
+  layout_type: grid
+  layout:
+    grid-auto-rows: min-content
+    grid-gap: 0
+    height: 100%
+    margin: 0
+    mediaquery:
+      "{{ mj.media_query.mobile }}":
+        grid-template-columns: repeat(5, 1fr)
+  cards:
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:home
+      label: Home
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/home
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:format-list-bulleted
+      label: Entities
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/entities
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:car
+      label: Car
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/3home
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:format-list-bulleted
+      label: Entities
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/4home
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:dots-vertical
+      label: More
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/5home

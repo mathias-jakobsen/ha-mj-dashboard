@@ -1,0 +1,82 @@
+#-----------------------------------------------------------#
+#       Views
+#-----------------------------------------------------------#
+
+view_title_home: My Home
+view_title_entities: Entities
+
+
+#-----------------------------------------------------------#
+#       Areas
+#-----------------------------------------------------------#
+
+area: Area
+areas: Areas
+area_location___others__: Others
+
+
+#-----------------------------------------------------------#
+#       Domains
+#-----------------------------------------------------------#
+
+domain_automation: Automations
+domain_binary_sensor: Binary Sensors
+domain_button: Buttons
+domain_camera: Cameras
+domain_cover: Covers
+domain_device_tracker: Device Trackers
+domain_light: Lights
+domain_lock: Locks
+domain_media_player: Media Players
+domain_person: Persons
+domain_scene: Scenes
+domain_script: Scripts
+domain_sensor: Sensors
+domain_switch: Switches
+domain_zone: Zones
+
+
+#-----------------------------------------------------------#
+#       Device Classes
+#-----------------------------------------------------------#
+
+device_class_non_existant: No Device Class
+
+
+#-----------------------------------------------------------#
+#       Entities
+#-----------------------------------------------------------#
+
+entity: entity
+entities: entities
+
+
+#-----------------------------------------------------------#
+#       Lights
+#-----------------------------------------------------------#
+
+light_on: Light on
+lights_on: Lights on
+
+
+#-----------------------------------------------------------#
+#       Locations
+#-----------------------------------------------------------#
+
+location_away: Away
+location_home: Home
+
+
+#-----------------------------------------------------------#
+#       Persons
+#-----------------------------------------------------------#
+
+person: Person
+persons: Persons
+
+
+#-----------------------------------------------------------#
+#       Weather
+#-----------------------------------------------------------#
+
+weather: Weather

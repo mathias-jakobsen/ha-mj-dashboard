@@ -1,0 +1,40 @@
+mj_navbar_button_card:
+  template: mj_base_card
+
+  variables:
+    mj_color: var(--primary-background-color)
+    mj_color_opacity: 1
+    mj_navigation_path: null
+
+  show_icon: true
+  show_label: true
+
+  tap_action:
+    action: "[[[ return variables.mj_navigation_path !== null ? 'navigate' : 'none'; ]]]"
+    navigation_path: "[[[ return variables.mj_navigation_path; ]]]"
+
+  styles:
+    card:
+      - --mdc-ripple-color: transparent
+      - border: 0
+      - border-radius: 0
+      - box-shadow: none
+      - padding: 0.6em
+    grid:
+      - grid-gap: 0.3em 0
+      - grid-template: >
+          "i" 1fr
+          "l" auto / 1fr
+    icon:
+      - filter: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'brightness(30%) saturate(250%)' : 'none'; ]]]"
+    img_cell:
+      - background: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--primary-color)' : 'transparent'; ]]]"
+      - color: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--primary-color)' : 'var(--card-text-color-tertiary)'; ]]]"
+      - border-radius: 20px
+      - padding: 0.3em
+      - width: 100%
+    label:
+      - color: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--card-text-color-primary)' : 'var(--card-text-color-tertiary)'; ]]]"
+      - font-size: 1em
+      - font-weight: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--card-font-weight-primary)' : 'var(--card-font-weight-secondary)'; ]]]"
+

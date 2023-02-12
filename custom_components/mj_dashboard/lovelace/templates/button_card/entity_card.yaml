@@ -1,0 +1,69 @@
+mj_entity_card:
+  template: mj_base_card
+
+  variables:
+    mj_color: var(--primary-color)
+    mj_nested: false
+    mj_swap_name_state: false
+    mj_vertical_layout: false
+
+  show_icon: true
+  show_label: false
+  show_name: true
+  show_state: true
+
+  hold_action:
+    action: more-info
+
+  label: "[[[ return entity?.entity_id?.split('.')[0].replaceAll('_', ' '); ]]]"
+
+  styles:
+    card:
+      - background: "[[[ return variables.mj_nested ? 'none' : 'var(--ha-card-background)'; ]]]"
+      - box-shadow: "[[[ return variables.mj_nested ? 'none' : 'var(--ha-card-box-shadow)'; ]]]"
+      - overflow: "[[[ return variables.mj_nested ? 'visible' : 'hidden'; ]]]"
+      - padding: "[[[ return variables.mj_nested ? '0' : 'var(--card-padding)'; ]]]"
+    custom_fields:
+      extra_row:
+        - margin-top: var(--card-grid-gap)
+        - pointer-events: none
+        - z-index: 1
+    grid:
+      - grid-gap: 0 var(--card-grid-gap)
+      - grid-template:  >
+          [[[
+            let result = variables.mj_swap_name_state ? "l s n" : "l n s";
+
+            if (this._buildStateString(this._stateObj)) {
+              result = variables.mj_swap_name_state ? "l s n" : "l n s";
+            }
+
+            result = result.split(" ");
+
+            if (variables.mj_vertical_layout) {
+              result = `'i' ${result.map(item => "'" + item + "'").join(" ")} 'extra_row'`;
+            }
+            else {
+              result = `${result.map(item => "'i " + item + "' min-content").join(" ")} 'extra_row extra_row' min-content / auto 1fr`;
+            }
+
+            return result;
+          ]]]
+    img_cell:
+      - margin-bottom: "[[[ return variables.mj_vertical_layout ? `var(--card-grid-gap)` : '0'; ]]]"
+    label:
+      - place-self: "[[[ return variables.mj_vertical_layout ? 'center' : 'center start'; ]]]"
+    name:
+      - color: "[[[ return entity && variables.mj_swap_name_state ? 'var(--card-text-color-secondary)' : 'var(--card-text-color-primary)'; ]]]"
+      - font-size: "[[[ return entity && variables.mj_swap_name_state ? `var(--card-font-size-secondary)` : `var(--card-font-size-primary)` ]]]"
+      - font-weight: "[[[ return variables.mj_swap_name_state ? `var(--card-font-weight-secondary)` : `var(--card-font-weight-primary)`; ]]]"
+      - place-self: "[[[ return variables.mj_vertical_layout ? 'center' : 'center start'; ]]]"
+      - text-align: "[[[ return variables.mj_vertical_layout ? 'center' : 'left'; ]]]"
+    state:
+      - color: "[[[ return entity && variables.mj_swap_name_state ? 'var(--card-text-color-primary)' : 'var(--card-text-color-secondary)'; ]]]"
+      - font-size: "[[[ return entity && variables.mj_swap_name_state ? `var(--card-font-size-primary)` : `var(--card-font-size-secondary)` ]]]"
+      - font-weight: "[[[ return variables.mj_swap_name_state ? `var(--card-font-weight-primary)` : `var(--card-font-weight-secondary)`; ]]]"
+      - place-self: "[[[ return variables.mj_vertical_layout ? 'center' : 'center start'; ]]]"
+      - text-align: "[[[ return variables.mj_vertical_layout ? 'center' : 'left'; ]]]"
+
+

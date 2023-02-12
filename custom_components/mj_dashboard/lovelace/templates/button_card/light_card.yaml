@@ -1,0 +1,61 @@
+mj_light_card:
+  template: mj_entity_card
+
+  variables:
+    mj_color: var(--button-card-light-color)
+    mj_color_icon: var(--button-card-light-color)
+
+  state_display: >
+    [[[
+      if (entity.attributes.brightness) {
+        return `${entity.state} • ${Math.round(entity.attributes.brightness / 2.55)}%`;
+      }
+
+      return entity.state;
+    ]]]
+
+  custom_fields:
+    brightness_bar:
+      card:
+        type: custom:my-slider-v2
+        entity: "[[[ return entity.entity_id; ]]]"
+        allowTapping: true
+        styles:
+          card:
+            - background: transparent
+            - height: 100%
+          progress:
+            - background: "[[[ return variables.mj_color; ]]]"
+            - opacity: var(--mj-card-progress-bar-opacity)
+            - transition: background 400ms ease-out
+            - width: 0
+            - will-change: background
+          thumb:
+            - cursor: grab
+            - opacity: 0
+            - pointer-events: auto
+            - right: -20px
+            - width: 40px
+          track:
+            - background: transparent
+
+  styles:
+    custom_fields:
+      brightness_bar:
+        - bottom: 0
+        - left: 0
+        - opacity: 0
+        - pointer-events: none
+        - position: absolute
+        - right: 0
+        - top: 0
+        - transition: opacity 400ms ease-out
+        - will-change: opacity
+        - z-index: 0
+
+  state:
+    - id: state_on
+      styles:
+        custom_fields:
+          brightness_bar:
+            - opacity: 1
