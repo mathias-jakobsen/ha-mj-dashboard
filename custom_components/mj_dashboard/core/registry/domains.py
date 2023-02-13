@@ -5,7 +5,6 @@
 from ..user_config import MJ_UserConfig, DomainConfig
 from dataclasses import dataclass
 from homeassistant.core import HomeAssistant
-from typing import  Union
 
 
 #-----------------------------------------------------------#
@@ -113,7 +112,7 @@ class DomainRegistry:
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_id(self, id: str) -> Union[DomainRegistryEntry, None]:
+    def get_by_id(self, id: str) -> DomainRegistryEntry | None:
         """ Gets a domain by id. """
         return self._domains.get(id, None)
 

@@ -3,10 +3,10 @@
 #-----------------------------------------------------------#
 
 from ..user_config import AreaConfig, AreaLocationsConfig, MJ_UserConfig
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.area_registry import async_get as async_get_areas
-from typing import Optional, Union
+from typing import Optional
 
 
 #-----------------------------------------------------------#
@@ -43,7 +43,6 @@ class AreaRegistryEntry:
     id: str
     priority: int
     color: Optional[tuple[int, int, int]] = None
-    entities: dict[str, str] = field(default_factory=dict)
     icon: Optional[str] = None
     location: Optional[str] = None
     name: Optional[str] = None
@@ -91,7 +90,6 @@ class AreaRegistry:
             area_config = config.areas.get(area.id, config.areas.get(area.name, AreaConfig()))
             new_entry = AreaRegistryEntry(
                 color=area_config.color,
-                entities=area_config.entities,
                 icon=area_config.icon,
                 id=area.id,
                 name=area.name,
@@ -130,11 +128,11 @@ class AreaRegistry:
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_id(self, id: str) -> Union[AreaRegistryEntry, None]:
+    def get_by_id(self, id: str) -> AreaRegistryEntry | None:
         """ Gets an area by id. """
         return self._areas.get(id, None)
 
-    def get_by_name(self, name: str) -> Union[AreaRegistryEntry, None]:
+    def get_by_name(self, name: str) -> AreaRegistryEntry | None:
         """ Gets an area by name. """
         return next((area for area in self._areas.values() if area.name == name), None)
 

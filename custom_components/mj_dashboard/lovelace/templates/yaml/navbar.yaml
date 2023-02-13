@@ -6,16 +6,16 @@ type: custom:mod-card
 style: |
   ha-card {
     background: var(--app-header-background-color);
-    border-top: var(--app-header-border-bottom);
+    border-left: var(--app-header-border-bottom);
     border-radius: 0;
     height: 100%;
   }
 
-  @mediaquery {{ mj.media_query.mobile }} {
+  @media {{ mj.user_config.mediaquery.mobile }} {
     ha-card {
       background: var(--primary-background-color);
-      border-left: var(--app-header-border-bottom);
-      border-top: none;
+      border-left: none;
+      border-top: var(--app-header-border-bottom);
     }
   }
 card:
@@ -27,8 +27,8 @@ card:
     height: 100%
     margin: 0
     mediaquery:
-      "{{ mj.media_query.mobile }}":
-        grid-template-columns: repeat(5, 1fr)
+      "{{ mj.user_config.mediaquery.mobile }}":
+        grid-template-columns: repeat({{ [mj.user_config.navbar.num_buttons_mobile, 2 + mj.user_config.navbar.buttons | count] | min }}, 1fr)
   cards:
     - type: custom:button-card
       template: mj_navbar_button_card
@@ -42,21 +42,58 @@ card:
       label: Entities
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/entities
+
+    {% for button in mj.user_config.navbar.buttons %}
     - type: custom:button-card
       template: mj_navbar_button_card
-      icon: mdi:car
-      label: Car
+      icon: {{ button.icon }}
+      label: {{ button.title }}
       variables:
-        mj_navigation_path: /{{ mj.dashboard_url }}/3home
+        mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
+      view_layout:
+        {% if loop.index < mj.user_config.navbar.num_buttons_desktop - 2 %}
+        show:
+          mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
+        {% else %}
+        show: never
+        {% endif %}
+
     - type: custom:button-card
       template: mj_navbar_button_card
-      icon: mdi:format-list-bulleted
-      label: Entities
+      icon: {{ button.icon }}
+      label: {{ button.title }}
       variables:
-        mj_navigation_path: /{{ mj.dashboard_url }}/4home
+        mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
+      view_layout:
+        {% if loop.index < mj.user_config.navbar.num_buttons_mobile - 2 %}
+        show:
+          mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
+        {% else %}
+        show: never
+        {% endif %}
+    {% endfor %}
+
+
+    {% if mj.user_config.navbar.buttons | count + 2 > mj.user_config.navbar.num_buttons_desktop %}
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: mdi:dots-vertical
       label: More
       variables:
-        mj_navigation_path: /{{ mj.dashboard_url }}/5home
+        mj_navigation_path: /{{ mj.dashboard_url }}/more
+      view_layout:
+        show:
+          mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
+    {% endif %}
+
+    {% if mj.user_config.navbar.buttons | count + 2 > mj.user_config.navbar.num_buttons_mobile %}
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:dots-vertical
+      label: More
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/more
+      view_layout:
+        show:
+          mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
+    {% endif %}

@@ -1,0 +1,33 @@
+# mj_dashboard
+
+{% for button in mj.user_config.navbar.buttons %}
+- title: {{ button.title }}
+  icon: {{ button.icon }}
+  path: {{ button.navigation_path }}
+  theme: mj_dashboard_layout
+  type: custom:grid-layout
+  layout:
+    grid-gap: 0
+    grid-template: >
+      "main navbar" 1fr / 1fr auto
+    height: 100%
+    margin: 0
+    padding: 0
+    mediaquery:
+      "{{ mj.user_config.mediaquery.mobile }}":
+        grid-template: >
+          "main" 1fr
+          "navbar" auto / 1fr
+  cards:
+    - !include ../templates/yaml/navbar.yaml
+
+    - type: custom:mod-card
+      view_layout:
+        grid-area: main
+      style: |
+        :host {
+          overflow: auto;
+        }
+      card: !include {{ mj.paths.custom_views }}/{{ button.navigation_path }}.yaml
+{% endfor %}
+

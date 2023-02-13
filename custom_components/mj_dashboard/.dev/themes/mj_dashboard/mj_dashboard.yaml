@@ -145,7 +145,6 @@ mj_dashboard: &mj_dashboard
 
   # ---- App Header ------
   app-header-border-bottom: 1px solid var(--divider-color)
-  #app-header-selection-bar-color: transparent
   app-header-text-color: var(--primary-text-color)
 
   # ---- Card ------

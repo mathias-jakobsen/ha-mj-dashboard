@@ -46,11 +46,22 @@ class MJ_UserConfig:
                 vol.Required("domains", default=[]): [str],
                 vol.Required("entities", default=[]): [str]
             },
-            vol.Required("scene_colors", default={}): {str: str},
+            vol.Required("mediaquery", default={}): {
+                vol.Required("desktop", default="(min-width: 870px)"): str,
+                vol.Required("mobile", default="(max-width: 869px)"): str,
+            },
+            vol.Required("navbar", default={}): {
+                vol.Required("buttons", default=[]): [{
+                    vol.Required("icon"): str,
+                    vol.Required("navigation_path"): str,
+                    vol.Required("title"): str
+                }],
+                vol.Required("num_buttons_desktop", default=7): vol.All(int, vol.Range(min=2)),
+                vol.Required("num_buttons_mobile", default=5): vol.All(int, vol.Range(min=2))
+            },
             vol.Required("weather", default={}): {
                 vol.Required("entities", default={}): {str: str}
             }
-
         }, extra=True)
 
 

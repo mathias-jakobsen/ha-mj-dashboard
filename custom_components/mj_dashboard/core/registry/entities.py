@@ -12,7 +12,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import async_get as async_get_devices
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_registry import async_get as async_get_entities
-from typing import Optional, Union
+from typing import Optional
 
 
 #-----------------------------------------------------------#
@@ -131,7 +131,7 @@ class EntityRegistry:
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_area(self, area: Union[AreaRegistryEntry, str], domain: Union[str, list[str]] = None, device_class: Union[str, list[str]] = None) -> list[EntityRegistryEntry]:
+    def get_by_area(self, area: AreaRegistryEntry | str, domain: str | list[str] = None, device_class: str | list[str] = None) -> list[EntityRegistryEntry]:
         """ Gets a list of entities by one or more areas. """
         if type(area) == str:
             area = self._areas.get_by_id(area) or self._areas.get_by_name(area)
@@ -154,7 +154,7 @@ class EntityRegistry:
 
         return result
 
-    def get_by_device_class(self, domain: Union[str, DomainRegistryEntry], *device_classes: str) -> Union[list[EntityRegistryEntry], tuple[str, list[EntityRegistryEntry]]]:
+    def get_by_device_class(self, domain: str | DomainRegistryEntry, *device_classes: str) -> list[EntityRegistryEntry] | tuple[str, list[EntityRegistryEntry]]:
         """ Gets a list of entities by one or more device classes. """
         result = {}
 
@@ -172,12 +172,12 @@ class EntityRegistry:
 
         return sorted(result.items(), key=lambda x: (x[0] == "", x[0]))
 
-    def get_by_domain(self, *domains: Union[str, DomainRegistryEntry]) -> list[EntityRegistryEntry]:
+    def get_by_domain(self, *domains: str | DomainRegistryEntry) -> list[EntityRegistryEntry]:
         """ Gets a list of entity by one or more domains. """
         domains = [type(domain) == str and domain or domain.id for domain in domains]
         return [entity for entity in self._entities.values() if entity.domain in domains]
 
-    def get_by_id(self, id: str) -> Union[EntityRegistryEntry, None]:
+    def get_by_id(self, id: str) -> EntityRegistryEntry | None:
         """ Gets an entity by id. """
         return self._entities.get(id, None)
 

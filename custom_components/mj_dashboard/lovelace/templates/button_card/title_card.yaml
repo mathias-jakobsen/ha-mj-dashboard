@@ -1,7 +1,5 @@
 mj_title_card:
-  variables:
-    mj_subtitle_font_size: 16px
-    mj_title_font_size: 18px
+  template: mj_base_typography
 
   show_icon: false
   show_label: true
@@ -13,6 +11,8 @@ mj_title_card:
 
   styles:
     card:
+      - --card-font-size-primary: var(--mj-card-font-size-primary, 1.4em)
+      - --card-font-size-secondary: var(--mj-card-font-size-primary, 1.2em)
       - background: none
       - border-radius: 0
       - box-shadow: none
@@ -23,10 +23,10 @@ mj_title_card:
           "l"
           "s"
     label:
-      - color: var(--primary-text-color)
-      - font-size: "[[[ return variables.mj_title_font_size; ]]]"
+      - color: var(--card-text-color-primary)
+      - font-size: var(--card-font-size-primary)
       - place-self: center start
     state:
-      - color: var(--secondary-text-color)
-      - font-size: "[[[ return variables.mj_subtitle_font_size; ]]]"
+      - color: var(--card-text-color-secondary)
+      - font-size: var(--card-font-size-secondary)
       - place-self: center start

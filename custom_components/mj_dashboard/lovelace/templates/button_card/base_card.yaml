@@ -1,4 +1,6 @@
 mj_base_card:
+  template: mj_base_typography
+
   variables:
     mj_color: var(--ha-card-background)
     mj_color_always: false
@@ -16,19 +18,9 @@ mj_base_card:
   styles:
     card:
       - -webkit-tap-highlight-color: transparent
-      - --card-font-size-base: var(--mj-card-font-size-base, clamp(1rem, 0.9571rem + 0.1429vw, 1.1rem))
-      - --card-font-size-primary: var(--mj-card-font-size-primary, 1.1em)
-      - --card-font-size-secondary: var(--mj-card-font-size-secondary, 1em)
-      - --card-font-size-tertiary: var(--mj-card-font-size-tertiary, 0.82em)
-      - --card-font-weight-primary: var(--mj-card-font-weight-primary, 500)
-      - --card-font-weight-secondary: var(--mj-card-font-weight-secondary, 400)
-      - --card-font-weight-tertiary: var(--mj-card-font-weight-tertiary, 450)
       - --card-grid-gap: var(--mj-card-grid-gap, 0.6em)
       - --card-icon-size: var(--mj-card-icon-size, 2em)
       - --card-padding: var(--mj-card-padding, 1.1em)
-      - --card-text-color-primary: var(--mj-card-text-color-primary, var(--primary-text-color))
-      - --card-text-color-secondary: var(--mj-card-text-color-secondary, var(--secondary-text-color))
-      - --card-text-color-tertiary: var(--mj-card-text-color-tertiary, var(--tertiary-text-color, var(--card-text-color-secondary)))
       - --masonry-view-card-margin: 0
       - --mdc-ripple-color: var(--mj-card-ripple-color)
       - background: var(--ha-card-background)

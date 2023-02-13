@@ -18,7 +18,7 @@
     margin: 0
     padding: 0
     mediaquery:
-      "{{ mj.media_query.mobile }}":
+      "{{ mj.user_config.mediaquery.mobile }}":
         grid-template: >
           "main" 1fr
           "navbar" auto / 1fr
