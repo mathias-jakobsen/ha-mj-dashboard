@@ -18,7 +18,7 @@ mj_dashboard: &mj_dashboard
   mj-card-font-size-primary: 1.1em
   mj-card-font-size-secondary: 1em
   mj-card-font-size-tertiary: 0.82em
-  mj-card-font-weight-primary: 500
+  mj-card-font-weight-primary: 400
   mj-card-font-weight-secondary: 400
   mj-card-font-weight-tertiary: 450
   mj-card-grid-gap: 0.6em
@@ -30,6 +30,10 @@ mj_dashboard: &mj_dashboard
 
   # ---- Card Action ------
   mj-card-action-border-radius: 12px
+
+  # ---- Card Title ------
+  mj-card-title-font-size-primary: 1.4em
+  mj-card-title-font-size-secondary: 1.2em
 
   # ---- Layout ------
   mj-layout-grid-gap-h: 8px

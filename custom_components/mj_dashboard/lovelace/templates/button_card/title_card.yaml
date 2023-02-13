@@ -11,8 +11,8 @@ mj_title_card:
 
   styles:
     card:
-      - --card-font-size-primary: var(--mj-card-font-size-primary, 1.4em)
-      - --card-font-size-secondary: var(--mj-card-font-size-primary, 1.2em)
+      - --card-font-size-primary: var(--mj-card-title-font-size-primary, 1.4em)
+      - --card-font-size-secondary: var(--mj-card-title-font-size-secondary, 1.2em)
       - background: none
       - border-radius: 0
       - box-shadow: none
