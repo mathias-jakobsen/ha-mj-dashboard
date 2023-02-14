@@ -5,7 +5,7 @@
 {% if area_entities | count > 0 %}
 - title: {{ area.name }}
   icon: {{ area.icon }}
-  path: area_{{ area.id }}
+  path: areas_{{ area.id }}
   theme: mj_dashboard_layout
   subview: true
   type: custom:grid-layout

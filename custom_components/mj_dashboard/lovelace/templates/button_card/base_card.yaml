@@ -50,7 +50,6 @@ mj_base_card:
       - pointer-events: none
       - width: var(--card-icon-size)
     img_cell:
-      - border-radius: 50%
       - color: var(--card-text-color-primary)
       - height: var(--card-icon-size)
       - pointer-events: none

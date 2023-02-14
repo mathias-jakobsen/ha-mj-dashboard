@@ -1,6 +1,6 @@
 # mj_dashboard
 
-- title: Entities
+- title: {{ mj.translations.view_title_entities }}
   icon: mdi:format-list-bulleted
   path: entities
   theme: mj_dashboard_layout
@@ -47,7 +47,7 @@
             state_display: {{ domain_entities_count }} {{ domain_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
             variables:
               mj_color: var(--mj-color-{{ domain.id }}, var(--ha-card-background))
-              mj_color_icon: var(--mj-color-{{ domain.id }}, currentColor)
+              mj_color_icon: var(--mj-color-{{ domain.id }}, var(--primary-color, currentColor))
               mj_navigation_path: entities_{{ domain.id }}
           {% endif %}
           {% endfor %}

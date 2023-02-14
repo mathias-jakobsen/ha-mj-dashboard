@@ -1,6 +1,6 @@
 # mj_dashboard
 
-- title: Areas
+- title: {{ mj.translations.view_title_areas }}
   icon: mdi:texture-box
   path: areas
   theme: mj_dashboard_layout
@@ -65,7 +65,7 @@
                   {% if area.color is not none %}
                   mj_color_icon: {{ area.color }}
                   {% endif %}
-                  mj_navigation_path: area_{{ area.id }}
+                  mj_navigation_path: areas_{{ area.id }}
               {% endif %}
               {% endfor %}
           {% endfor %}

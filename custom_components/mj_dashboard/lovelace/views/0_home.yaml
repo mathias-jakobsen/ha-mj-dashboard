@@ -1,6 +1,6 @@
 # mj_dashboard
 
-- title: Home
+- title: {{ mj.translations.view_title_home }}
   icon: mdi:home
   path: home
   theme: mj_dashboard_layout
