@@ -35,17 +35,4 @@
           grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
-        cards:
-          {% for entity in mj.entities %}
-          - type: custom:button-card
-            template:
-              {% set card_template = "mj_" ~ entity.domain ~ "_card" %}
-              {% if card_template in mj.button_card_templates %}
-                {{ card_template }}
-              {% else %}
-                mj_entity_card
-              {% endif %}
-            entity: {{ entity.entity_id }}
-            variables:
-              mj_vertical_layout: false
-          {% endfor %}
+        cards: []
