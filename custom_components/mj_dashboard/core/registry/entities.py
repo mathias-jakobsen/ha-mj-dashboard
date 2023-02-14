@@ -77,7 +77,7 @@ class EntityRegistry:
 
             new_entry = EntityRegistryEntry(
                 area_id=None,
-                device_class=state.attributes.get(ATTR_DEVICE_CLASS, None),
+                device_class=state.attributes.get(ATTR_DEVICE_CLASS, ""),
                 device_id=None,
                 domain=state.domain,
                 entity_category=None,
