@@ -96,7 +96,12 @@ def _get_load_yaml(hass: HomeAssistant, config: MJ_Config) -> None:
         global _should_reload
 
         try:
-            is_lovelace_gen = next(open(filename, encoding="utf-8")).lower().startswith(PARSER_KEYWORD)
+            is_lovelace_gen = False
+
+            with open(filename, encoding="utf-8") as file:
+                if file.readline().lower().startswith(PARSER_KEYWORD):
+                    is_lovelace_gen = True
+
             if is_lovelace_gen:
                 stream = io.StringIO(jinja.get_template(filename).render({**args, **get_registry(hass, config, _should_reload)}))
                 stream.name = filename

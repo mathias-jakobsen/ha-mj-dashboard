@@ -35,6 +35,7 @@ class MJ_UserConfig:
                 vol.Optional("icon"): str,
                 vol.Optional("priority"): int
             },
+            vol.Required("area_highlighted_domains", default=[]): [str],
             vol.Required("domains", default={}): {
                 str: {
                     vol.Optional("icon"): str,

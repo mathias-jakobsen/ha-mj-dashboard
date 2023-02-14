@@ -5,6 +5,7 @@ mj_base_card:
     mj_color: var(--ha-card-background)
     mj_color_always: false
     mj_color_icon: null
+    mj_color_icon_only: false
     mj_color_opacity: 0.15
 
   show_icon: false
@@ -18,7 +19,7 @@ mj_base_card:
   styles:
     card:
       - -webkit-tap-highlight-color: transparent
-      - --card-grid-gap: var(--mj-card-grid-gap, 0.6em)
+      - --card-grid-gap: var(--mj-card-grid-gap, 0.8em)
       - --card-icon-size: var(--mj-card-icon-size, 2em)
       - --card-padding: var(--mj-card-padding, 1.1em)
       - --masonry-view-card-margin: 0
@@ -96,6 +97,6 @@ mj_base_card:
       styles:
         custom_fields:
           overlay:
-            - opacity: "[[[ return variables.mj_color_opacity; ]]]"
+            - opacity: "[[[ return variables.mj_color_icon_only ? '0' : variables.mj_color_opacity; ]]]"
         icon:
           - color: "[[[ return variables.mj_color_icon ? variables.mj_color_icon : 'currentColor'; ]]]"

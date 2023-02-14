@@ -28,7 +28,7 @@ card:
     margin: 0
     mediaquery:
       "{{ mj.user_config.mediaquery.mobile }}":
-        grid-template-columns: repeat({{ [mj.user_config.navbar.num_buttons_mobile, 2 + mj.user_config.navbar.buttons | count] | min }}, 1fr)
+        grid-template-columns: repeat({{ [mj.user_config.navbar.num_buttons_mobile, 3 + mj.user_config.navbar.buttons | count] | min }}, 1fr)
   cards:
     - type: custom:button-card
       template: mj_navbar_button_card
@@ -36,6 +36,12 @@ card:
       label: Home
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/home
+    - type: custom:button-card
+      template: mj_navbar_button_card
+      icon: mdi:texture-box
+      label: Areas
+      variables:
+        mj_navigation_path: /{{ mj.dashboard_url }}/areas
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: mdi:format-list-bulleted
@@ -51,7 +57,7 @@ card:
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
       view_layout:
-        {% if loop.index < mj.user_config.navbar.num_buttons_desktop - 2 %}
+        {% if loop.index < mj.user_config.navbar.num_buttons_desktop - 3 %}
         show:
           mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
         {% else %}
@@ -65,7 +71,7 @@ card:
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
       view_layout:
-        {% if loop.index < mj.user_config.navbar.num_buttons_mobile - 2 %}
+        {% if loop.index < mj.user_config.navbar.num_buttons_mobile - 3 %}
         show:
           mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
         {% else %}
@@ -74,7 +80,7 @@ card:
     {% endfor %}
 
 
-    {% if mj.user_config.navbar.buttons | count + 2 > mj.user_config.navbar.num_buttons_desktop %}
+    {% if mj.user_config.navbar.buttons | count + 3 > mj.user_config.navbar.num_buttons_desktop %}
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: mdi:dots-vertical
@@ -86,7 +92,7 @@ card:
           mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
     {% endif %}
 
-    {% if mj.user_config.navbar.buttons | count + 2 > mj.user_config.navbar.num_buttons_mobile %}
+    {% if mj.user_config.navbar.buttons | count + 3 > mj.user_config.navbar.num_buttons_mobile %}
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: mdi:dots-vertical
