@@ -155,12 +155,11 @@ async def async_setup_themefiles(hass: HomeAssistant, config: MJ_Config) -> None
     destination_path = hass.config.path(config.themes_path, THEMES_FILE_PATH_DESTINATION)
     source_path = hass.config.path(THEMES_FILE_PATH_SOURCE)
 
-    if os.path.exists(destination_path):
-        return
-
-    LOGGER.debug(f"Creating theme file at {destination_path}.")
+    LOGGER.debug(f"Creating theme files at {destination_path}.")
     os.makedirs(destination_path, exist_ok=True)
-    shutil.copy(source_path, destination_path)
+
+    for filename in os.listdir(source_path):
+        shutil.copy(source_path + filename, destination_path + filename)
     await hass.services.async_call(DOMAIN_FRONTEND, SERVICE_RELOAD_THEMES)
 
 async def async_remove_themefiles(hass: HomeAssistant, config: MJ_Config) -> None:

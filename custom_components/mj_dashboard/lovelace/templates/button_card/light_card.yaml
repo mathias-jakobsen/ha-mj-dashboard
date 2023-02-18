@@ -3,7 +3,7 @@ mj_light_card:
 
   variables:
     mj_color: var(--button-card-light-color)
-    mj_color_icon: var(--button-card-light-color)
+    mj_color_icon: true
 
   state_display: >
     [[[
@@ -56,6 +56,8 @@ mj_light_card:
   state:
     - id: state_on
       styles:
+        card:
+          - --mj-card-box-shadow-color: "[[[ return variables.mj_color; ]]]"
         custom_fields:
           brightness_bar:
             - opacity: 1

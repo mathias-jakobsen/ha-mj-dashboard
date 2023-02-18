@@ -5,4 +5,4 @@ venv
 .coverage
 .idea
 custom_components/hacs
-custom_components/remote_homeassistant
+custom_components/mj_dashboard/.dev

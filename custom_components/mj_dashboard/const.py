@@ -28,7 +28,7 @@ RESOURCES_STATIC_PATH = f"/{DOMAIN}/resources"
 #       Themes
 #-----------------------------------------------------------#
 
-THEMES_FILE_PATH_SOURCE = f"custom_components/{DOMAIN}/themefiles/{DOMAIN}.yaml"
+THEMES_FILE_PATH_SOURCE = f"custom_components/{DOMAIN}/themefiles/"
 THEMES_FILE_PATH_DESTINATION = f"{DOMAIN}/"
 
 

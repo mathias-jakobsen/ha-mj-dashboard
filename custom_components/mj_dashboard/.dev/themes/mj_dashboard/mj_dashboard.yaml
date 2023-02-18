@@ -4,7 +4,8 @@ mj_dashboard: &mj_dashboard
   #-----------------------------------------------------------#
 
   card-mod-theme: mj_dashboard
-  card-mod-root-yaml: !include /config/custom_components/mj_dashboard/themefiles/card_mod_root.yaml
+  card-mod-card-yaml: !include card_mod_card.yaml
+  card-mod-root-yaml: !include card_mod_root.yaml
 
 
   #-----------------------------------------------------------#
