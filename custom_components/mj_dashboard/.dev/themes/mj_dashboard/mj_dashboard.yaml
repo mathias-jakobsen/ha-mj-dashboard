@@ -93,7 +93,7 @@ mj_dashboard: &mj_dashboard
       # ---- Card ------
       mj-card-background: rgba(250, 250, 250, 1)
       mj-card-border-color: rgba(0, 0, 0, 0.12)
-      mj-card-box-shadow-color: rgba(30, 30, 30, 0.05)
+      mj-card-box-shadow-color: rgba(70, 70, 70, 0.1)
       mj-card-progress-bar-opacity: 0.25
       mj-card-ripple-color: rgba(20, 20, 20, 0.3)
       mj-card-state-color-filter: brightness(800%) saturate(200%)

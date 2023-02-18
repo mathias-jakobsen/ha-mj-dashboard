@@ -10,7 +10,7 @@ from homeassistant.core import Event, HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util.yaml import loader
 from typing import Callable
-import io, jinja2, os
+import io, jinja2, json, os
 
 
 #-----------------------------------------------------------#
@@ -90,28 +90,28 @@ async def _async_on_lovelace_update(e: Event) -> None:
 
 def _get_load_yaml(hass: HomeAssistant, config: MJ_Config) -> None:
     """ Gets the YAML loader. """
-    jinja = jinja2.Environment(loader=jinja2.FileSystemLoader("/"))
+    def jinja_filter_as_json(value):
+        return json.dumps(value)
 
-    def load_yaml(filename: str, secrets: loader.Secrets = None, args: dict = {}) -> loader.JSON_TYPE:
+    jinja = jinja2.Environment(loader=jinja2.FileSystemLoader("/"))
+    jinja.filters["asjson"] = jinja_filter_as_json
+
+    def load_yaml(filename: str, secrets: loader.Secrets = None, args: dict = {}, parse_jinja: bool = True) -> loader.JSON_TYPE:
         global _registry
 
         try:
-            is_lovelace_gen = False
+            if parse_jinja:
+                with open(filename, encoding="utf-8") as file:
+                    if file.readline().lower().startswith(PARSER_KEYWORD):
+                        if _registry is None:
+                            _registry = { PARSER_KEY_GLOBAL: MJ_Registry.from_config(hass, config) }
+
+                        stream = io.StringIO(jinja.get_template(filename).render({**args, **_registry}))
+                        stream.name = filename
+                        return loader.parse_yaml(stream, secrets)
 
             with open(filename, encoding="utf-8") as file:
-                if file.readline().lower().startswith(PARSER_KEYWORD):
-                    is_lovelace_gen = True
-
-            if is_lovelace_gen:
-                if _registry is None:
-                    _registry = { PARSER_KEY_GLOBAL: MJ_Registry.from_config(hass, config) }
-
-                stream = io.StringIO(jinja.get_template(filename).render({**args, **_registry}))
-                stream.name = filename
-                return loader.parse_yaml(stream, secrets)
-            else:
-                with open(filename, encoding="utf-8") as file:
-                    return loader.parse_yaml(file, secrets)
+                return loader.parse_yaml(file, secrets)
         except loader.yaml.YAMLError as exc:
             LOGGER.error(str(exc))
             raise HomeAssistantError(exc)

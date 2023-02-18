@@ -64,7 +64,7 @@ class MJ_Registry:
                 if filename.endswith("__custom__.yaml"):
                     continue
 
-                templates = loader.load_yaml(filename).keys()
+                templates = loader.load_yaml(filename, parse_jinja=False).keys()
                 result.extend(templates)
         else:
             LOGGER.warning(f"Unable to load button card templates list: Path {path} does not exist.")

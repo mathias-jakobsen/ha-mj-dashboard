@@ -1,0 +1,57 @@
+# mj_dashboard
+
+mj_sensor_battery_card:
+  template: mj_entity_card
+  triggers_update: all
+
+  variables:
+    mj_battery_color_danger: rgb(245, 68, 54)
+    mj_battery_color_warning: rgb(241, 196, 71)
+    mj_battery_color_ok: rgb(1, 200, 82)
+    mj_battery_level_danger: 20
+    mj_battery_level_warning: 50
+  icon: >
+    [[[
+      const config = {{ mj.user_config.entities.customize.battery | asjson }}?.[entity.entity_id];
+      const battery_level = entity.state;
+      const charging_state = states[config?.charging_state_entity]?.state.toLowerCase();
+      const is_charging = ["charging", "on"].includes(charging_state);
+      const charging_type = states[config?.charging_type_entity]?.state.toLowerCase();
+
+      if (battery_level == undefined || battery_level == "unknown") {
+        return "mdi:battery-unknown";
+      }
+
+      let icon = "mdi:battery";
+
+      if (battery_level == 100 && is_charging == false) {
+        return icon;
+      }
+
+      if (is_charging) {
+        icon = `mdi:battery-${charging_type == "wireless" ? "charging-wireless" : "charging"}`;
+      }
+
+      if (battery_level < 10) {
+        return `${icon}-outline`;
+      }
+
+      if (battery_level == 100 && is_charging && charging_type == "wireless") {
+        return icon;
+      }
+
+      return `${icon}-${Math.floor(battery_level / 10) * 10}`;
+    ]]]
+  styles:
+    icon:
+      - color: >
+          [[[
+            if (entity.state <= variables.mj_battery_level_danger) {
+              return variables.mj_battery_color_danger;
+            }
+            else if (entity.state <= variables.mj_battery_level_warning) {
+              return variables.mj_battery_color_warning;
+            }
+
+            return variables.mj_battery_color_ok;
+          ]]]

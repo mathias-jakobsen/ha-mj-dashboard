@@ -3,3 +3,9 @@ entities:
     - light.bathroom_spotlight_1
   favorites:
     - light.bathroom_spotlight_2
+
+  customize:
+    battery:
+      sensor.mathias_phone_battery_level:
+        charging_state_entity: binary_sensor.mathias_phone_is_charging
+        charging_type_entity: sensor.mathias_phone_charging_type
