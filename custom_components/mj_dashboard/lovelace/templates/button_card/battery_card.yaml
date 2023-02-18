@@ -15,7 +15,6 @@ mj_sensor_battery_card:
 
         for (const level of Object.values(config.levels)) {
           if (entity.state <= level.value) {
-
             return level.color;
           }
         }
@@ -32,52 +31,3 @@ mj_sensor_battery_card:
         return true;
       ]]]
     mj_color_icon: true
-
-  icon: >
-    [[[
-      const config = {{ mj.user_config.entities.customize.battery | asjson }}?.entities[entity.entity_id];
-      const charger_type = states[config?.charger_type_entity]?.state.toLowerCase();
-      const charging_state = states[config?.charging_state_entity]?.state.toLowerCase();
-      const is_charging = ["charging", "on"].includes(charging_state);
-
-      if ([undefined, "unknown", "unavailable"].includes(entity.state)) {
-        return "mdi:battery-unknown";
-      }
-
-      let icon = "mdi:battery";
-
-      if (entity.state == 100 && is_charging == false) {
-        return icon;
-      }
-
-      if (is_charging) {
-        icon = `mdi:battery-${charger_type == "wireless" ? "charging-wireless" : "charging"}`;
-      }
-
-      if (entity.state < 10) {
-        return `${icon}-outline`;
-      }
-
-      if (entity.state == 100 && is_charging && charging_type == "wireless") {
-        return icon;
-      }
-
-      return `${icon}-${Math.floor(entity.state / 10) * 10}`;
-    ]]]
-  styles:
-    icon:
-      - color: >
-          [[[
-            if ([undefined, "unknown", "unavailable"].includes(entity.state)) {
-              return "currentColor";
-            }
-
-            if (entity.state <= variables.mj_battery_level_danger) {
-              return variables.mj_battery_color_danger;
-            }
-            else if (entity.state <= variables.mj_battery_level_warning) {
-              return variables.mj_battery_color_warning;
-            }
-
-            return variables.mj_battery_color_ok;
-          ]]]

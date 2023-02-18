@@ -17,6 +17,7 @@ mj_navbar_button_card:
   styles:
     card:
       - --mdc-ripple-color: transparent
+      - background: transparent
       - border: 0
       - border-radius: 0
       - box-shadow: none

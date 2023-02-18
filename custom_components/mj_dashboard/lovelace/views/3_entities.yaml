@@ -39,8 +39,8 @@
           {% set favorite_domains = mj.domains | selectattr("id", "in", mj.user_config.domains.favorites) | list %}
           {% set not_favorite_domains = mj.domains | rejectattr("id", "in", mj.user_config.domains.favorites) | list %}
 
-          {% set favorite_domains_entities_count = mj.entities.get_by_domain(*favorite_domains) | rejectattr("hidden", "true") | list | count %}
-          {% set not_favorite_domains_entities_count = mj.entities.get_by_domain(*not_favorite_domains) | rejectattr("hidden", "true") | list | count %}
+          {% set favorite_domains_entities_count = mj.entities.get_by_domain(*favorite_domains) | count %}
+          {% set not_favorite_domains_entities_count = mj.entities.get_by_domain(*not_favorite_domains) | count %}
 
           {% if favorite_domains_entities_count > 0 and not_favorite_domains_entities_count > 0 %}
             {% set grouped_domains = dict(favorites=favorite_domains, others=not_favorite_domains) %}
@@ -68,8 +68,7 @@
               {% endif %}
 
               {% for domain in domains %}
-              {% set domain_entities = mj.entities.get_by_domain(domain.id) | rejectattr("hidden", "true") | list %}
-              {% set domain_entities_count = domain_entities | count %}
+              {% set domain_entities_count = mj.entities.get_by_domain(domain.id) | count %}
               {% if domain_entities_count > 0 %}
               - type: custom:button-card
                 template: mj_domain_card

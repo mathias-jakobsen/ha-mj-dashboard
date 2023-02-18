@@ -5,10 +5,6 @@ entities:
     - light.bathroom_spotlight_2
   customize:
     battery:
-      entities:
-        sensor.mathias_phone_battery_level:
-          charger_type_entity: sensor.mathias_phone_charger_type
-          charging_state_entity: binary_sensor.mathias_phone_is_charging
       levels:
         danger:
           color: rgb(245, 68, 54)

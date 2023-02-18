@@ -43,7 +43,6 @@
           padding: var(--mj-layout-view-padding)
         cards:
           {% for device_class, entities in domain_entities %}
-          {% set entities = entities | rejectattr("hidden", "true") | list %}
           {% if entities | count > 0 %}
           - type: custom:layout-card
             layout_type: grid

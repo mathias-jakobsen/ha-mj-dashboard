@@ -57,10 +57,6 @@ class MJ_UserConfig:
             vol.Required("entities", default={}): {
                 vol.Required("customize", default={}): {
                     vol.Required("battery", default={}): {
-                        vol.Required("entities", default={}): {str: {
-                            vol.Optional("charger_type_entity"): str,
-                            vol.Optional("charging_state_entity"): str
-                        }},
                         vol.Required("levels", default={}): {str: {
                             vol.Required("color"): str,
                             vol.Required("value"): vol.All(int, vol.Range(min=0, max=100))
