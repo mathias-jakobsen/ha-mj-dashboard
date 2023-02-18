@@ -94,6 +94,8 @@ mj_base_card:
           return variables.mj_color_always || entity == undefined || ["on", "playing"].includes(entity.state);
         ]]]
       styles:
+        card:
+          - --mj-card-box-shadow-color: "[[[ return variables.mj_color; ]]]"
         custom_fields:
           overlay:
             - opacity: "[[[ return variables.mj_color_background ? variables.mj_color_opacity : '0'; ]]]"

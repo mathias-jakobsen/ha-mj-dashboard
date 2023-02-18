@@ -71,8 +71,8 @@ class MJ_EntityRegistry:
         result = {}
 
         for state in hass.states.async_all():
-            #if state.entity_id in config.exclude.entities:
-            #    continue
+            if state.entity_id in config.entities.exclude:
+                continue
 
             new_entry = MJ_EntityRegistryEntry(
                 area_id=None,

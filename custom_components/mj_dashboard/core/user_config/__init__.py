@@ -6,6 +6,7 @@ from ...const import DOMAIN
 from ..logger import LOGGER
 from .area_config import MJ_AreasUserConfig
 from .domain_config import MJ_UserDomainsConfig
+from .entities_config import MJ_UserEntitiesConfig
 import voluptuous as vol
 
 
@@ -54,6 +55,18 @@ class MJ_UserConfig:
             },
 
             vol.Required("entities", default={}): {
+                vol.Required("customize", default={}): {
+                    vol.Required("battery", default={}): {
+                        vol.Required("entities", default={}): {str: {
+                            vol.Optional("charger_type_entity"): str,
+                            vol.Optional("charging_state_entity"): str
+                        }},
+                        vol.Required("levels", default={}): {str: {
+                            vol.Required("color"): str,
+                            vol.Required("value"): vol.All(int, vol.Range(min=0, max=100))
+                        }}
+                    }
+                },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("favorites", default=[]): [str]
             },
@@ -84,6 +97,7 @@ class MJ_UserConfig:
 
     areas: MJ_AreasUserConfig
     domains: MJ_UserDomainsConfig
+    entities: MJ_UserEntitiesConfig
 
 
     #--------------------------------------------#
@@ -93,6 +107,7 @@ class MJ_UserConfig:
     def __init__(self, config: dict):
         self.areas = MJ_AreasUserConfig(**config.pop("areas", {}))
         self.domains = MJ_UserDomainsConfig(**config.pop("domains", {}))
+        self.entities = MJ_UserEntitiesConfig(**config.pop("entities", {}))
 
         for key, value in config.items():
             setattr(self, key, value)
