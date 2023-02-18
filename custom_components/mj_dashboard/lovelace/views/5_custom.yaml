@@ -28,6 +28,6 @@
         :host {
           overflow: auto;
         }
-      card: !include {{ mj.paths.custom_views }}/{{ button.navigation_path }}.yaml
+      card: !include {{ mj.user_config_paths.views }}/{{ button.navigation_path }}.yaml
 {% endfor %}
 

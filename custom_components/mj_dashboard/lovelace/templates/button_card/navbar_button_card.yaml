@@ -2,8 +2,9 @@ mj_navbar_button_card:
   template: mj_base_card
 
   variables:
-    mj_color: var(--primary-background-color)
-    mj_color_opacity: 1
+    mj_color: currentColor
+    mj_color_background: false
+    mj_color_icon: true
     mj_navigation_path: null
 
   show_icon: true

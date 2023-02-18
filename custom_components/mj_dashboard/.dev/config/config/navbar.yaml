@@ -1,0 +1,13 @@
+navbar:
+  num_buttons_desktop: 1
+  num_buttons_mobile: 1
+  buttons:
+    - title: Car
+      icon: mdi:car
+      navigation_path: car
+    - title: Car
+      icon: mdi:car
+      navigation_path: car
+    - title: Car
+      icon: mdi:car
+      navigation_path: car

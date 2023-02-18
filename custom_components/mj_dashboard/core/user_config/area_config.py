@@ -2,39 +2,26 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
 
 
 #-----------------------------------------------------------#
-#       MJ_UserConfig - Area Locations
-#-----------------------------------------------------------#
-
-@dataclass
-class AreaLocationsConfig:
-    """ A class representing the area locations configuration. """
-
-    #--------------------------------------------#
-    #       Fields
-    #--------------------------------------------#
-
-    icon: Optional[str] = None
-    priority: int = 1
-
-
-#-----------------------------------------------------------#
-#       MJ_UserConfig - Area
+#       MJ_AreasUserConfig
 #-----------------------------------------------------------#
 
 @dataclass
-class AreaConfig:
+class MJ_AreasUserConfig:
     """ A class representing the areas configuration. """
 
     #--------------------------------------------#
     #       Fields
     #--------------------------------------------#
 
-    color: Optional[tuple[int, int, int]] = None
-    icon: Optional[str] = None
-    location: Optional[str] = None
-    priority: int = 1
+    customize: dict[str, dict] = field(default_factory=dict)
+    customize_global: dict = field(default_factory=dict)
+    exclude: list[str] = field(default_factory=list)
+    locations: list[str] = field(default_factory=list)
+
+
+
+

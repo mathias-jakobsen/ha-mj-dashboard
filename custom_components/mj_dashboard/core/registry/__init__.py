@@ -2,111 +2,100 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from ...const import DASHBOARD_URL, DOMAIN, PARSER_KEY_GLOBAL, TRANSLATIONS_PATH
+from __future__ import annotations
+from ...const import DASHBOARD_URL, DOMAIN, TRANSLATIONS_PATH
 from ..config import MJ_Config
 from ..logger import LOGGER
 from ..user_config import MJ_UserConfig
-from .areas import AreaRegistry
-from .domains import DomainRegistry
-from .entities import EntityRegistry
+from .areas import MJ_AreaRegistry
+from .domains import MJ_DomainRegistry
+from .entities import MJ_EntityRegistry
+from .user_config_paths import MJ_UserConfigPaths
+from dataclasses import dataclass
 from homeassistant.core import HomeAssistant
 from homeassistant.util.yaml import loader
 import os
 
 
 #-----------------------------------------------------------#
-#       Variables
+#       MJ_Registry
 #-----------------------------------------------------------#
 
-_registry: dict = None
+@dataclass
+class MJ_Registry:
+    areas: MJ_AreaRegistry
+    button_card_templates: list[str]
+    dashboard_url: str
+    domains: MJ_DomainRegistry
+    entities: MJ_EntityRegistry
+    translations: dict[str, str]
+    user_config: MJ_UserConfig
+    user_config_paths: MJ_UserConfigPaths
 
+    @classmethod
+    def from_config(cls, hass: HomeAssistant, config: MJ_Config):
+        """ Creates an instance from a configuration. """
+        translations_path = hass.config.path(TRANSLATIONS_PATH, f"{config.language}.yaml")
+        user_config_paths = MJ_UserConfigPaths.from_config(hass, config)
+        user_config = cls.load_user_config(user_config_paths.config)
 
-#-----------------------------------------------------------#
-#       Public Methods
-#-----------------------------------------------------------#
+        areas = MJ_AreaRegistry(hass, user_config)
+        domains = MJ_DomainRegistry(hass, user_config)
+        entities = MJ_EntityRegistry(hass, areas, user_config)
 
-def get_registry(hass: HomeAssistant, config: MJ_Config, reload: bool = False) -> dict:
-    """ Gets the registry. """
-    global _registry
+        return MJ_Registry(
+            areas=areas,
+            button_card_templates=cls.load_button_card_templates(hass.config.path(f"custom_components/{DOMAIN}/lovelace/templates/button_card")),
+            dashboard_url=DASHBOARD_URL,
+            domains=domains,
+            entities=entities,
+            translations=cls.load_translations(translations_path),
+            user_config=user_config,
+            user_config_paths=user_config_paths
+        )
 
-    if _registry is None or reload:
-        _registry = _get_registry(hass, config)
+    @staticmethod
+    def load_button_card_templates(path: str) -> list[str]:
+        """ Loads a list of available button card templates. """
+        result = []
 
-    return _registry
+        if os.path.exists(path):
+            for filename in loader._find_files(path, "*.yaml"):
+                if filename.endswith("__custom__.yaml"):
+                    continue
 
+                templates = loader.load_yaml(filename).keys()
+                result.extend(templates)
+        else:
+            LOGGER.warning(f"Unable to load button card templates list: Path {path} does not exist.")
 
-#-----------------------------------------------------------#
-#       Private Functions
-#-----------------------------------------------------------#
+        return result
 
-def _get_registry(hass: HomeAssistant, config: MJ_Config) -> dict:
-    """ Gets the registry. """
-    user_config_path = hass.config.path(config.user_config_path, "config/")
-    user_config = _load_user_config(user_config_path)
+    @staticmethod
+    def load_translations(path: str) -> dict[str, str]:
+        """ Loads the translation strings. """
+        if os.path.exists(path):
+            return loader.load_yaml(path)
+        else:
+            LOGGER.warning(f"Unable to load translations: Path {path} does not exist.")
 
-    area_registry = AreaRegistry(hass, user_config)
-    domain_registry = DomainRegistry(hass, user_config)
-    entity_registry = EntityRegistry(hass, area_registry, user_config)
+        return {}
 
-    button_card_templates_path = hass.config.path(f"custom_components/{DOMAIN}/lovelace/templates/button_card")
-    button_card_templates = _load_button_card_templates(button_card_templates_path)
+    @staticmethod
+    def load_user_config(path: MJ_Config) -> MJ_UserConfig:
+        """ Loads the user configuration from the configuration directory. """
+        result = {}
 
-    translations_path = hass.config.path(TRANSLATIONS_PATH, f"{config.language}.yaml")
-    translations = _load_translations(translations_path)
+        if os.path.exists(path):
+            for filename in loader._find_files(path, "*.yaml"):
+                config = loader.load_yaml(filename)
 
-    custom_button_card_template_path = hass.config.path(config.user_config_path, "custom_templates/")
-    custom_views_path = hass.config.path(config.user_config_path, "custom_views/")
+                if isinstance(config, dict):
+                    result.update(config)
 
-    return {
-        PARSER_KEY_GLOBAL: {
-            "areas": area_registry,
-            "button_card_templates": button_card_templates,
-            "dashboard_url": DASHBOARD_URL,
-            "domains": domain_registry,
-            "entities": entity_registry,
-            "paths": {
-                "custom_button_card_templates": custom_button_card_template_path if os.path.exists(custom_button_card_template_path) else None,
-                "custom_views": custom_views_path if os.path.exists(custom_views_path) else None
-            },
-            "translations": translations,
-            "user_config": user_config
-        }
-    }
+            LOGGER.debug(f"User configuration loaded from {path}.")
+        else:
+            LOGGER.warning(f"Unable to load user configuration: Path {path} does not exist.")
 
-def _load_button_card_templates(path: str) -> list[str]:
-    """ Loads a list of available button card templates. """
-    result = []
+        return MJ_UserConfig.from_config(result)
 
-    for filename in loader._find_files(path, "*.yaml"):
-        if filename.endswith("__custom__.yaml"):
-            continue
-
-        templates = loader.load_yaml(filename).keys()
-        result.extend(templates)
-
-    return result
-
-def _load_translations(path: str) -> dict[str, str]:
-    """ Loads the translation strings. """
-    if os.path.exists(path):
-        return loader.load_yaml(path)
-
-    return {}
-
-def _load_user_config(path: str) -> MJ_UserConfig:
-    """ Loads the user configuration from the configuration directory. """
-    result = {}
-
-    if os.path.exists(path):
-        for filename in loader._find_files(path, "*.yaml"):
-            config = loader.load_yaml(filename)
-
-            if isinstance(config, dict):
-                result.update(config)
-
-        result = MJ_UserConfig.get_schema()(result)
-        LOGGER.debug(f"User configuration loaded from {path}.")
-    else:
-        LOGGER.warning(f"Unable to load user configuration: Path {path} does not exist.")
-
-    return MJ_UserConfig(result)

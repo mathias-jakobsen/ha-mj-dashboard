@@ -1,0 +1,11 @@
+domains:
+  customize:
+    light:
+      color: orange
+      icon: mdi:lightbulb
+  exclude:
+    - persistent_notification
+  favorites:
+    - light
+    - scene
+    - sensor

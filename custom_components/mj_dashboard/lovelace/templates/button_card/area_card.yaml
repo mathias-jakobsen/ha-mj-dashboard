@@ -2,8 +2,7 @@ mj_area_card:
   template: mj_entity_card
 
   variables:
-    mj_color: var(--ha-card-background)
-    mj_color_icon: >
+    mj_color: >
       [[[
         function getHashCode(str) {
           let hash = 0;
@@ -48,7 +47,7 @@ mj_area_card:
         const hashCode = getHashCode(name);
         return `hsl(${Math.abs(hashCode % 360)}, 100%, 60%)`;
       ]]]
-    mj_color_icon_only: true
+    mj_color_background: false
     mj_navigation_path: null
 
   tap_action:

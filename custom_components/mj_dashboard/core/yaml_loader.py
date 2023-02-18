@@ -2,10 +2,10 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from ..const import DASHBOARD_URL, PARSER_KEYWORD
+from ..const import DASHBOARD_URL, PARSER_KEY_GLOBAL, PARSER_KEYWORD
 from .config import MJ_Config
 from .logger import LOGGER
-from .registry import get_registry
+from .registry import MJ_Registry
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util.yaml import loader
@@ -26,7 +26,7 @@ EVENT_LOVELACE_UPDATE = "lovelace_updated"
 
 _lovelace_listener: Callable = None
 _old_loader: Callable = None
-_should_reload: bool = True
+_registry: MJ_Registry = None
 
 
 #-----------------------------------------------------------#
@@ -47,18 +47,18 @@ def setup(hass: HomeAssistant, config: MJ_Config) -> None:
 
 def reload(hass: HomeAssistant, config: MJ_Config) -> None:
     """ Reloads the YAML loader. """
-    global _old_loader, _should_reload
+    global _old_loader, _registry
 
     if _old_loader is None:
         return setup(hass, config)
 
     LOGGER.debug("Reloading the modified YAML loader.")
     loader.load_yaml = _get_load_yaml(hass, config)
-    _should_reload = True
+    _registry = None
 
 def remove() -> None:
     """ Removes the modified YAML loader. """
-    global _lovelace_listener, _old_loader, _should_reload
+    global _lovelace_listener, _old_loader, _registry
 
     if _old_loader is None:
         return
@@ -69,7 +69,7 @@ def remove() -> None:
         _lovelace_listener()
     _lovelace_listener = None
     _old_loader = None
-    _should_reload = True
+    _registry = None
 
 
 #-----------------------------------------------------------#
@@ -78,10 +78,10 @@ def remove() -> None:
 
 async def _async_on_lovelace_update(e: Event) -> None:
     """ Triggered when lovelace is updated. """
-    global _should_reload
+    global _registry
 
     if e.data.get("url_path", None) == DASHBOARD_URL:
-        _should_reload = True
+        _registry = None
 
 
 #-----------------------------------------------------------#
@@ -93,7 +93,7 @@ def _get_load_yaml(hass: HomeAssistant, config: MJ_Config) -> None:
     jinja = jinja2.Environment(loader=jinja2.FileSystemLoader("/"))
 
     def load_yaml(filename: str, secrets: loader.Secrets = None, args: dict = {}) -> loader.JSON_TYPE:
-        global _should_reload
+        global _registry
 
         try:
             is_lovelace_gen = False
@@ -103,10 +103,11 @@ def _get_load_yaml(hass: HomeAssistant, config: MJ_Config) -> None:
                     is_lovelace_gen = True
 
             if is_lovelace_gen:
-                stream = io.StringIO(jinja.get_template(filename).render({**args, **get_registry(hass, config, _should_reload)}))
+                if _registry is None:
+                    _registry = { PARSER_KEY_GLOBAL: MJ_Registry.from_config(hass, config) }
+
+                stream = io.StringIO(jinja.get_template(filename).render({**args, **_registry}))
                 stream.name = filename
-                if _should_reload:
-                    _should_reload = False
                 return loader.parse_yaml(stream, secrets)
             else:
                 with open(filename, encoding="utf-8") as file:

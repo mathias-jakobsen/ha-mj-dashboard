@@ -2,8 +2,8 @@ mj_domain_card:
   template: mj_entity_card
 
   variables:
+    mj_color_background: false
     mj_color_icon: true
-    mj_color_icon_only: true
     mj_navigation_path: null
 
   tap_action:

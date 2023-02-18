@@ -33,12 +33,12 @@ class MJ_Config:
     #       Fields
     #--------------------------------------------#
 
+    install_custom_cards: bool = True
     language: str = field(default=LANGUAGES[0])
     sidepanel_icon: str = "mdi:view-dashboard"
     sidepanel_title: str = NAME
     themes_path: str = "themes/"
     user_config_path: str = f"{DOMAIN}/"
-    install_custom_cards: bool = True
 
 
     #--------------------------------------------#

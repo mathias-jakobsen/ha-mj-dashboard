@@ -4,8 +4,8 @@ mj_base_card:
   variables:
     mj_color: var(--ha-card-background)
     mj_color_always: false
-    mj_color_icon: null
-    mj_color_icon_only: false
+    mj_color_background: true
+    mj_color_icon: true
     mj_color_opacity: 0.15
 
   show_icon: false
@@ -96,6 +96,6 @@ mj_base_card:
       styles:
         custom_fields:
           overlay:
-            - opacity: "[[[ return variables.mj_color_icon_only ? '0' : variables.mj_color_opacity; ]]]"
+            - opacity: "[[[ return variables.mj_color_background ? variables.mj_color_opacity : '0'; ]]]"
         icon:
-          - color: "[[[ return variables.mj_color_icon ? variables.mj_color_icon : 'currentColor'; ]]]"
+          - color: "[[[ return variables.mj_color_icon ? variables.mj_color : 'currentColor'; ]]]"

@@ -4,51 +4,50 @@
 
 from ...const import DOMAIN
 from ..user_config import MJ_UserConfig
-from .areas import AreaRegistry, AreaRegistryEntry
-from .domains import DomainRegistryEntry
+from .areas import MJ_AreaRegistry, MJ_AreaRegistryEntry
+from .domains import MJ_DomainRegistryEntry
 from dataclasses import dataclass
 from homeassistant.const import ATTR_DEVICE_CLASS, ATTR_FRIENDLY_NAME, ATTR_UNIT_OF_MEASUREMENT
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import async_get as async_get_devices
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_registry import async_get as async_get_entities
-from typing import Optional
 
 
 #-----------------------------------------------------------#
-#       EntityRegistryEntry
+#       MJ_EntityRegistryEntry
 #-----------------------------------------------------------#
 
 @dataclass
-class EntityRegistryEntry:
+class MJ_EntityRegistryEntry:
     """ A class representing an entity entry. """
     domain: str
     entity_id: str
     hidden: bool = False
-    area_id: Optional[str] = None
-    device_class: Optional[str] = None
-    device_id: Optional[str] = None
-    entity_category: Optional[EntityCategory] = None
-    icon: Optional[str] = None
-    name: Optional[str] = None
-    unit_of_measurement: Optional[str] = None
+    area_id: str | None = None
+    device_class: str | None = None
+    device_id: str | None = None
+    entity_category: EntityCategory | None = None
+    icon: str | None = None
+    name: str | None = None
+    unit_of_measurement: str | None = None
 
 
 #-----------------------------------------------------------#
 #       EntityRegistry
 #-----------------------------------------------------------#
 
-class EntityRegistry:
+class MJ_EntityRegistry:
     """ A class representing an entity registry. """
 
     #--------------------------------------------#
     #       Constructor
     #--------------------------------------------#
 
-    def __init__(self, hass: HomeAssistant, areas: AreaRegistry, config: MJ_UserConfig):
-        self._areas: AreaRegistry = areas
+    def __init__(self, hass: HomeAssistant, areas: MJ_AreaRegistry, config: MJ_UserConfig):
+        self._areas: MJ_AreaRegistry = areas
         self._config: MJ_UserConfig = config
-        self._entities: dict[str, EntityRegistryEntry] = self._get_entities(hass, config)
+        self._entities: dict[str, MJ_EntityRegistryEntry] = self._get_entities(hass, config)
         self._hass: HomeAssistant = hass
 
 
@@ -65,17 +64,17 @@ class EntityRegistry:
     #       Private Methods
     #--------------------------------------------#
 
-    def _get_entities(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, EntityRegistryEntry]:
+    def _get_entities(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, MJ_EntityRegistryEntry]:
         """ Gets a dictionary containing the entity entries. """
         device_registry = async_get_devices(hass).devices
         entity_registry = async_get_entities(hass).entities
         result = {}
 
         for state in hass.states.async_all():
-            if state.entity_id in config.exclude.entities:
-                continue
+            #if state.entity_id in config.exclude.entities:
+            #    continue
 
-            new_entry = EntityRegistryEntry(
+            new_entry = MJ_EntityRegistryEntry(
                 area_id=None,
                 device_class=state.attributes.get(ATTR_DEVICE_CLASS, ""),
                 device_id=None,
@@ -131,17 +130,19 @@ class EntityRegistry:
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_area(self, area: AreaRegistryEntry | str, domain: str | list[str] = None, device_class: str | list[str] = None) -> list[EntityRegistryEntry]:
+    def get_by_area(self, area: MJ_AreaRegistryEntry | str | list[MJ_AreaRegistryEntry | str], domain: str | list[str] = None, device_class: str | list[str] = None) -> list[MJ_EntityRegistryEntry]:
         """ Gets a list of entities by one or more areas. """
-        if type(area) == str:
-            area = self._areas.get_by_id(area) or self._areas.get_by_name(area)
+        if not isinstance(area, list):
+            area = [area]
 
+        areas = [self._areas.get_by_id(area) or self._areas.get_by_name(area) if type(area) == str else area for area in area]
+        area_ids = [area.id for area in areas]
         device_classes = [device_class] if type(device_class) == str else device_class
         domains = [domain] if type(domain) == str else domain
         result = []
 
         for entity in self._entities.values():
-            if entity.area_id != area.id:
+            if entity.area_id not in area_ids:
                 continue
 
             if domains is not None and entity.domain not in domains:
@@ -154,7 +155,7 @@ class EntityRegistry:
 
         return result
 
-    def get_by_device_class(self, domain: str | DomainRegistryEntry, *device_classes: str) -> list[EntityRegistryEntry] | tuple[str, list[EntityRegistryEntry]]:
+    def get_by_device_class(self, domain: str | MJ_DomainRegistryEntry, *device_classes: str) -> list[MJ_EntityRegistryEntry] | tuple[str, list[MJ_EntityRegistryEntry]]:
         """ Gets a list of entities by one or more device classes. """
         result = {}
 
@@ -172,12 +173,12 @@ class EntityRegistry:
 
         return sorted(result.items(), key=lambda x: (x[0] == "", x[0]))
 
-    def get_by_domain(self, *domains: str | DomainRegistryEntry) -> list[EntityRegistryEntry]:
+    def get_by_domain(self, *domains: str | MJ_DomainRegistryEntry) -> list[MJ_EntityRegistryEntry]:
         """ Gets a list of entity by one or more domains. """
-        domains = [type(domain) == str and domain or domain.id for domain in domains]
+        domains = [domain if isinstance(domain, str) else domain.id for domain in domains]
         return [entity for entity in self._entities.values() if entity.domain in domains]
 
-    def get_by_id(self, id: str) -> EntityRegistryEntry | None:
+    def get_by_id(self, id: str) -> MJ_EntityRegistryEntry | None:
         """ Gets an entity by id. """
         return self._entities.get(id, None)
 

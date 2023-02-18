@@ -4,6 +4,10 @@
       height: calc(100vh - var(--header-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     }
 
+    hui-view {
+      transition: none;
+    }
+
     ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) ha-tabs {
       --paper-tabs-selection-bar-color: transparent;
       color: transparent;

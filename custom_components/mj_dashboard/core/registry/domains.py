@@ -2,8 +2,9 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from ..user_config import MJ_UserConfig, DomainConfig
-from dataclasses import dataclass
+from ..logger import LOGGER
+from ..user_config import MJ_UserConfig
+from dataclasses import dataclass, KW_ONLY
 from homeassistant.core import HomeAssistant
 
 
@@ -47,22 +48,23 @@ DEFAULT_DOMAIN_ICONS = {
 
 
 #-----------------------------------------------------------#
-#       DomainRegistryEntry
+#       MJ_DomainRegistryEntry
 #-----------------------------------------------------------#
 
-@dataclass
-class DomainRegistryEntry:
+@dataclass(kw_only=True)
+class MJ_DomainRegistryEntry:
     """ A class representing a domain entry. """
-    icon: str
     id: str
-    priority: int
+    _: KW_ONLY
+    color: str | None = None
+    icon: str | None = None
 
 
 #-----------------------------------------------------------#
-#       DomainRegistry
+#       MJ_DomainRegistry
 #-----------------------------------------------------------#
 
-class DomainRegistry:
+class MJ_DomainRegistry:
     """ A class representing a domain registry. """
 
     #--------------------------------------------#
@@ -88,32 +90,39 @@ class DomainRegistry:
     #       Private Methods
     #--------------------------------------------#
 
-    def _get_domains(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, DomainRegistryEntry]:
+    def _get_domains(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, MJ_DomainRegistryEntry]:
         """ Gets a dictionary containing the domain entries. """
-        result: dict[str, DomainRegistryEntry] = {}
+        result: dict[str, MJ_DomainRegistryEntry] = {}
 
         for domain in set([state.entity_id.split(".")[0] for state in hass.states.async_all()]):
-            if domain in config.exclude.domains:
+            if domain in config.domains.exclude:
                 continue
 
-            domain_config = config.domains.get(domain, DomainConfig())
-            new_entry = DomainRegistryEntry(
-                icon=domain_config.icon or DEFAULT_DOMAIN_ICONS.get(domain, DEFAULT_DOMAIN_ICON),
+            domain_config = config.domains.customize.get(domain, {})
+
+            new_entry = MJ_DomainRegistryEntry(
                 id=domain,
-                priority=domain_config.priority
+                **domain_config
             )
+
+            if new_entry.color is None:
+                new_entry.color = f"var(--mj-color-{domain}, var(--primary-color))"
+
+            if new_entry.icon is None:
+                new_entry.icon = DEFAULT_DOMAIN_ICONS.get(domain, DEFAULT_DOMAIN_ICON)
 
             result[new_entry.id] = new_entry
 
-        return dict(sorted(result.items(), key=lambda x: (-x[1].priority, x[1].id)))
+        return dict(sorted(result.items(), key=lambda x: x[0]))
 
 
     #--------------------------------------------#
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_id(self, id: str) -> DomainRegistryEntry | None:
+    def get_by_id(self, id: str) -> MJ_DomainRegistryEntry | None:
         """ Gets a domain by id. """
+        LOGGER.debug(id)
         return self._domains.get(id, None)
 
     def update(self, config: MJ_UserConfig = None) -> None:

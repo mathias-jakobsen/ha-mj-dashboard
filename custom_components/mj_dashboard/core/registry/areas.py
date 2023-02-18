@@ -2,11 +2,11 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from ..user_config import AreaConfig, AreaLocationsConfig, MJ_UserConfig
-from dataclasses import dataclass
+from ..logger import LOGGER
+from ..user_config import MJ_UserConfig
+from dataclasses import dataclass, field, KW_ONLY
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.area_registry import async_get as async_get_areas
-from typing import Optional
 
 
 #-----------------------------------------------------------#
@@ -34,25 +34,27 @@ DEFAULT_AREA_ICONS = {
 
 
 #-----------------------------------------------------------#
-#       EntityRegistryEntry
+#       MJ_AreaRegistryEntry
 #-----------------------------------------------------------#
 
-@dataclass
-class AreaRegistryEntry:
+@dataclass(kw_only=True)
+class MJ_AreaRegistryEntry:
     """ A class representing an area entry. """
     id: str
-    priority: int
-    color: Optional[tuple[int, int, int]] = None
-    icon: Optional[str] = None
-    location: Optional[str] = None
-    name: Optional[str] = None
+    name: str
+    _: KW_ONLY
+    color: str | None = None
+    domain_favorites: list[str] = field(default_factory=list)
+    icon: str | None = None
+    location: str | None = None
+    priority: int = 1
 
 
 #-----------------------------------------------------------#
-#       AreaRegistry
+#       MJ_AreaRegistry
 #-----------------------------------------------------------#
 
-class AreaRegistry:
+class MJ_AreaRegistry:
     """ A class representing an area registry. """
 
     #--------------------------------------------#
@@ -60,7 +62,7 @@ class AreaRegistry:
     #--------------------------------------------#
 
     def __init__(self, hass: HomeAssistant, config: MJ_UserConfig):
-        self._areas: dict[str, AreaRegistryEntry] = self._get_areas(hass, config)
+        self._areas: dict[str, MJ_AreaRegistryEntry] = self._get_areas(hass, config)
         self._config: MJ_UserConfig = config
         self._hass: HomeAssistant = hass
 
@@ -78,23 +80,20 @@ class AreaRegistry:
     #       Private Methods
     #--------------------------------------------#
 
-    def _get_areas(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, AreaRegistryEntry]:
+    def _get_areas(self, hass: HomeAssistant, config: MJ_UserConfig) -> dict[str, MJ_AreaRegistryEntry]:
         """ Gets a dictionary containing the area entries. """
         area_registry = async_get_areas(hass).areas
-        result: dict[str, AreaRegistryEntry] = {}
+        result: dict[str, MJ_AreaRegistryEntry] = {}
 
         for area in area_registry.values():
-            if area.id in config.exclude.areas or area.name in config.exclude.areas:
+            if area.id in config.areas.exclude or area.name in config.areas.exclude:
                 continue
 
-            area_config = config.areas.get(area.id, config.areas.get(area.name, AreaConfig()))
-            new_entry = AreaRegistryEntry(
-                color=area_config.color,
-                icon=area_config.icon,
+            area_config = config.areas.customize.get(area.id, config.areas.customize.get(area.name, {})) | config.areas.customize_global
+            new_entry = MJ_AreaRegistryEntry(
                 id=area.id,
                 name=area.name,
-                location=area_config.location,
-                priority=area_config.priority
+                **area_config
             )
 
             if new_entry.icon is None:
@@ -104,7 +103,7 @@ class AreaRegistry:
 
         return dict(sorted(result.items(), key=lambda x: (-x[1].priority, x[1].name)))
 
-    def _get_area_icon(self, area: AreaRegistryEntry) -> str:
+    def _get_area_icon(self, area: MJ_AreaRegistryEntry) -> str:
         """ Gets the icon for an area. """
         icon_match = next(filter(lambda x: area.id in x[1] or area.name in x[1], DEFAULT_AREA_ICONS.items()), None)
 
@@ -119,7 +118,7 @@ class AreaRegistry:
     #--------------------------------------------#
 
     @property
-    def areas(self) -> dict[str, AreaRegistryEntry]:
+    def areas(self) -> dict[str, MJ_AreaRegistryEntry]:
         """ Gets the areas. """
         return self._areas
 
@@ -128,33 +127,30 @@ class AreaRegistry:
     #       Public Methods
     #--------------------------------------------#
 
-    def get_by_id(self, id: str) -> AreaRegistryEntry | None:
+    def get_by_id(self, id: str) -> MJ_AreaRegistryEntry | None:
         """ Gets an area by id. """
         return self._areas.get(id, None)
 
-    def get_by_name(self, name: str) -> AreaRegistryEntry | None:
+    def get_by_name(self, name: str) -> MJ_AreaRegistryEntry | None:
         """ Gets an area by name. """
         return next((area for area in self._areas.values() if area.name == name), None)
 
-    def group_by_location(self) -> list[tuple[str, list[AreaRegistryEntry]]]:
+    def group_by_location(self) -> list[tuple[str, list[MJ_AreaRegistryEntry]]]:
         """ Gets a list of areas grouped by location. """
-        result: dict[str, list[AreaRegistryEntry]] = {}
-
-        area_config = self._config.areas
-        location_config = self._config.area_locations
+        result: dict[str, list[MJ_AreaRegistryEntry]] = { location: [] for location in self._config.areas.locations }
 
         for area in self._areas.values():
-            location = area_config.get(area.id, area_config.get(area.name, AreaConfig())).location
+            location = area.location
 
             if location is None:
                 location = "__others__"
 
-            if location not in result:
+            if not location in result:
                 result[location] = []
 
             result[location].append(area)
 
-        return sorted(result.items(), key=lambda x: (-location_config.get(x[0], AreaLocationsConfig()).priority, x[0]), reverse=False)
+        return result.items()
 
     def update(self, config: MJ_UserConfig = None) -> None:
         """ Updates the registry. """

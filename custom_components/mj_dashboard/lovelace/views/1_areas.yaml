@@ -37,20 +37,21 @@
           padding: var(--mj-layout-view-padding)
         cards:
           {% for location, areas in mj.areas.group_by_location() %}
-          {% set areas_count = areas | count %}
+          {% set areas_entities_count = mj.entities.get_by_area(areas) | rejectattr("hidden", "true") | list | count %}
+          {% if areas_entities_count > 0 %}
           - type: custom:layout-card
             layout_type: grid
             layout:
               grid-gap: var(--mj-layout-grid-gap)
               grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
               margin: 0
+              padding: 0
             cards:
               - type: custom:button-card
                 view_layout:
                   grid-column: 1/-1
                 template: mj_title_card
                 label: {{ mj.translations["area_location_" ~ location] | default(location.replace("_", " ")) | title }}
-                state_display: {{ areas_count }} {{ areas_count == 1 and mj.translations.area or mj.translations.areas }}
 
               {% for area in areas %}
               {% set area_entities = mj.entities.get_by_area(area) | rejectattr("hidden", "true") | list %}
@@ -63,9 +64,10 @@
                 state_display: {{ area_entities_count }} {{ area_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
                 variables:
                   {% if area.color is not none %}
-                  mj_color_icon: {{ area.color }}
+                  mj_color: {{ area.color }}
                   {% endif %}
                   mj_navigation_path: areas_{{ area.id }}
               {% endif %}
               {% endfor %}
+          {% endif %}
           {% endfor %}

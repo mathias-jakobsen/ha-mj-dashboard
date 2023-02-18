@@ -41,8 +41,8 @@
           padding: var(--mj-layout-view-padding)
         cards:
           {% set grouped_entities = dict(area_entities | groupby("domain")) %}
-          {% set not_highlighted_domains = grouped_entities.keys() | reject("in", mj.user_config.area_highlighted_domains) | list %}
-          {% for domain in mj.user_config.area_highlighted_domains + not_highlighted_domains %}
+          {% set not_highlighted_domains = grouped_entities.keys() | reject("in", area.domain_favorites) | list %}
+          {% for domain in area.domain_favorites + not_highlighted_domains %}
           {% set domain_card_template = "mj_" ~ domain ~ "_card" %}
           {% set entities = grouped_entities[domain] %}
           {% if entities | count > 0 %}

@@ -32,22 +32,53 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+          grid-template-columns: 1fr
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
-          {% for domain in mj.domains %}
-          {% set domain_entities = mj.entities.get_by_domain(domain.id) | rejectattr("hidden", "true") | list %}
-          {% set domain_entities_count = domain_entities | count %}
-          {% if domain_entities_count > 0 %}
-          - type: custom:button-card
-            template: mj_domain_card
-            icon: {{ domain.icon }}
-            name: {{ mj.translations["domain_" ~ domain.id] | default(domain.id.replace("_", " ")) | title }}
-            state_display: {{ domain_entities_count }} {{ domain_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
-            variables:
-              mj_color: var(--mj-color-{{ domain.id }}, var(--ha-card-background))
-              mj_color_icon: var(--mj-color-{{ domain.id }}, var(--primary-color, currentColor))
-              mj_navigation_path: entities_{{ domain.id }}
+          {% set favorite_domains = mj.domains | selectattr("id", "in", mj.user_config.domains.favorites) | list %}
+          {% set not_favorite_domains = mj.domains | rejectattr("id", "in", mj.user_config.domains.favorites) | list %}
+
+          {% set favorite_domains_entities_count = mj.entities.get_by_domain(*favorite_domains) | rejectattr("hidden", "true") | list | count %}
+          {% set not_favorite_domains_entities_count = mj.entities.get_by_domain(*not_favorite_domains) | rejectattr("hidden", "true") | list | count %}
+
+          {% if favorite_domains_entities_count > 0 and not_favorite_domains_entities_count > 0 %}
+            {% set grouped_domains = dict(favorites=favorite_domains, others=not_favorite_domains) %}
+          {% elif favorite_domains_entities_count > 0 and not_favorite_domains_entities_count == 0 %}
+            {% set grouped_domains = dict(favorites=favorite_domains) %}
+          {% elif favorite_domains_entities_count == 0 and not_favorite_domains_entities_count > 0 %}
+            {% set grouped_domains = dict(others=not_favorite_domains) %}
           {% endif %}
+
+          {% for title, domains in grouped_domains.items() %}
+          - type: custom:layout-card
+            layout_type: grid
+            layout:
+              grid-gap: var(--mj-layout-grid-gap)
+              grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+              margin: 0
+              padding: 0
+            cards:
+              {% if not (loop.first and loop.last) %}
+              - type: custom:button-card
+                view_layout:
+                  grid-column: 1/-1
+                template: mj_title_card
+                label: {{ mj.translations[title] }}
+              {% endif %}
+
+              {% for domain in domains %}
+              {% set domain_entities = mj.entities.get_by_domain(domain.id) | rejectattr("hidden", "true") | list %}
+              {% set domain_entities_count = domain_entities | count %}
+              {% if domain_entities_count > 0 %}
+              - type: custom:button-card
+                template: mj_domain_card
+                icon: {{ domain.icon }}
+                name: {{ mj.translations["domain_" ~ domain.id] | default(domain.id.replace("_", " ")) | title }}
+                state_display: {{ domain_entities_count }} {{ domain_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
+                variables:
+                  mj_color: {{ domain.color }}
+                  mj_navigation_path: entities_{{ domain.id }}
+              {% endif %}
+              {% endfor %}
           {% endfor %}

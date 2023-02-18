@@ -4,9 +4,8 @@
 
 from ...const import DOMAIN
 from ..logger import LOGGER
-from .area_config import AreaLocationsConfig, AreaConfig
-from .domain_config import DomainConfig
-from .exclude_config import ExcludeConfig
+from .area_config import MJ_AreasUserConfig
+from .domain_config import MJ_UserDomainsConfig
 import voluptuous as vol
 
 
@@ -21,44 +20,57 @@ class MJ_UserConfig:
     #       Static Methods
     #--------------------------------------------#
 
+    @classmethod
+    def from_config(cls, config: dict):
+        """ Creates an instance from a configuration. """
+        return MJ_UserConfig(cls.get_schema()(config))
+
     @staticmethod
     def get_schema() -> vol.Schema:
         """ Gets the voluptuous schema. """
         return vol.Schema({
-            vol.Required("areas", default={}): {str: {
-                vol.Optional("entities"): { str: str },
-                vol.Optional("icon"): str,
-                vol.Optional("location"): str,
-                vol.Optional("priority"): int
-            }},
-            vol.Required("area_locations", default={}): {
-                vol.Optional("icon"): str,
-                vol.Optional("priority"): int
-            },
-            vol.Required("area_highlighted_domains", default=[]): [str],
-            vol.Required("domains", default={}): {
-                str: {
+            vol.Required("areas", default={}): {
+                vol.Required("customize", default={}): {str: {
+                    vol.Optional("color"): str,
+                    vol.Optional("domain_favorites", default=[]): [str],
                     vol.Optional("icon"): str,
-                    vol.Required("priority", default=1): int
-                }
+                    vol.Optional("location"): str,
+                    vol.Optional("priority"): int
+                },
+                vol.Required("customize_global", default={}): {
+                    vol.Optional("domain_favorites"): str
+                },
+                vol.Required("exclude", default=[]): [str],
+                vol.Required("locations", default=[]): [str]
+            }},
+
+            vol.Required("domains", default={}): {
+                vol.Required("customize"): {str: {
+                    vol.Optional("color"): str,
+                    vol.Optional("icon"): str
+                }},
+                vol.Required("exclude", default=[]): [str],
+                vol.Required("favorites", default=[]): [str]
             },
-            vol.Required("exclude", default={}): {
-                vol.Required("areas", default=[]): [str],
-                vol.Required("domains", default=[]): [str],
-                vol.Required("entities", default=[]): [str]
+
+            vol.Required("entities", default={}): {
+                vol.Required("exclude", default=[]): [str],
+                vol.Required("favorites", default=[]): [str]
             },
+
             vol.Required("mediaquery", default={}): {
                 vol.Required("desktop", default="(min-width: 870px)"): str,
                 vol.Required("mobile", default="(max-width: 869px)"): str,
             },
+
             vol.Required("navbar", default={}): {
                 vol.Required("buttons", default=[]): [{
                     vol.Required("icon"): str,
                     vol.Required("navigation_path"): str,
                     vol.Required("title"): str
                 }],
-                vol.Required("num_buttons_desktop", default=7): vol.All(int, vol.Range(min=2)),
-                vol.Required("num_buttons_mobile", default=5): vol.All(int, vol.Range(min=2))
+                vol.Required("num_buttons_desktop", default=4): vol.All(int, vol.Range(min=1)),
+                vol.Required("num_buttons_mobile", default=2): vol.All(int, vol.Range(min=1))
             },
             vol.Required("weather", default={}): {
                 vol.Required("entities", default={}): {str: str}
@@ -70,10 +82,8 @@ class MJ_UserConfig:
     #       Fields
     #--------------------------------------------#
 
-    areas: dict[str, AreaConfig]
-    area_locations: dict[str, AreaLocationsConfig]
-    domains: dict[str, DomainConfig]
-    exclude: ExcludeConfig
+    areas: MJ_AreasUserConfig
+    domains: MJ_UserDomainsConfig
 
 
     #--------------------------------------------#
@@ -81,10 +91,8 @@ class MJ_UserConfig:
     #--------------------------------------------#
 
     def __init__(self, config: dict):
-        self.areas = { key: AreaConfig(**value) for key, value in config.pop("areas", {}).items() }
-        self.area_locations = { key: AreaLocationsConfig(**value) for key, value in config.pop("area_locations", {}).items() }
-        self.domains = { key: DomainConfig(**value) for key, value in config.pop("domains", {}).items() }
-        self.exclude = ExcludeConfig(**config.pop("exclude", {}))
+        self.areas = MJ_AreasUserConfig(**config.pop("areas", {}))
+        self.domains = MJ_UserDomainsConfig(**config.pop("domains", {}))
 
         for key, value in config.items():
             setattr(self, key, value)
