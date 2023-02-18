@@ -113,7 +113,7 @@ class MJ_DomainRegistry:
 
             result[new_entry.id] = new_entry
 
-        return dict(sorted(result.items(), key=lambda x: x[0]))
+        return dict(sorted(result.items(), key=lambda x: (config.domains.favorites.index(x[0]) if x[0] in config.domains.favorites else -1, x[0])))
 
 
     #--------------------------------------------#

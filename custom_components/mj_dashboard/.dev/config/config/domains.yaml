@@ -9,3 +9,4 @@ domains:
     - light
     - scene
     - sensor
+    - binary_sensor
