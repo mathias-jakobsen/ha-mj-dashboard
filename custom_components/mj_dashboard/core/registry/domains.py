@@ -17,6 +17,7 @@ DEFAULT_DOMAIN_ICONS = {
     "automation": "mdi:robot",
     "binary_sensor": "mdi:checkbox-blank-circle-outline",
     "button": "mdi:gesture-tap-button",
+    "calendar": "mdi:calendar",
     "camera": "mdi:cctv",
     "climate": "mdi:thermostat",
     "counter": "mdi:counter",
