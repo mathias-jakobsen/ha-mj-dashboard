@@ -90,7 +90,7 @@ mj_climate_card:
                   }
 
                   if (entity.state == hvac_mode) {
-                    button.variables = { mj_color: variables.mj_color, mj_color_icon: true, mj_color_opacity: 0.4 };
+                    button.variables = { mj_color: variables.mj_color, mj_color_icon: true, mj_color_opacity: 0.3 };
                   }
 
                   result.push(button);

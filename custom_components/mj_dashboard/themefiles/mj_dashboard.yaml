@@ -51,7 +51,7 @@ mj_dashboard: &mj_dashboard
   mj-color-climate-hvac-mode-cool: hsl(210, 75%, 50%)
   mj-color-climate-hvac-mode-heat: hsl(0, 75%, 50%)
   mj-color-climate-hvac-mode-heat_cool: hsl(270, 75%, 50%)
-  mj-color-climate-hvac-mode-off: rgba(0, 0, 0, 1)
+  mj-color-climate-hvac-mode-off: rgba(50, 50, 50, 1)
 
   mj-color-light: hsl(30, 75%, 50%)
   mj-color-media-player: hsl(105, 100%, 30%)
@@ -95,8 +95,6 @@ mj_dashboard: &mj_dashboard
       mj-card-border-color: rgba(0, 0, 0, 0.12)
       mj-card-box-shadow-color: rgba(70, 70, 70, 0.1)
       mj-card-progress-bar-opacity: 0.25
-      mj-card-ripple-color: rgba(20, 20, 20, 0.3)
-      mj-card-state-color-filter: brightness(800%) saturate(200%)
 
       # ---- Card Action ------
       mj-card-action-background: rgba(230, 230, 230, 1)
@@ -133,8 +131,6 @@ mj_dashboard: &mj_dashboard
       mj-card-border-color: rgba(225, 225, 225, 0.12)
       mj-card-box-shadow-color: rgba(31, 31, 31, 1)
       mj-card-progress-bar-opacity: 0.3
-      mj-card-ripple-color: rgba(200, 200, 200, 0.3)
-      mj-card-state-color-filter: brightness(100%)
 
       # ---- Card Action ------
       mj-card-action-background: rgba(60, 60, 60, 1)

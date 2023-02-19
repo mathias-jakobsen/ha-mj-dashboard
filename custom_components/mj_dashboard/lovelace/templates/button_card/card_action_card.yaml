@@ -2,7 +2,7 @@ mj_card_action_card:
   template: mj_base_card
 
   variables:
-    mj_color: var(--app-header-background-color)
+    mj_color: var(--mj-card-action-background)
     mj_color_always: true
     mj_color_icon: false
     mj_color_opacity: 1
@@ -13,6 +13,9 @@ mj_card_action_card:
   show_state: false
 
   styles:
+    card:
+      - padding: 0.6em
+      - pointer-events: auto
     grid:
       - grid-template: >
           "i" 1fr / 1fr

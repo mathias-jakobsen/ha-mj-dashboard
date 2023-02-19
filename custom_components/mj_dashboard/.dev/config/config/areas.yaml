@@ -1,13 +1,6 @@
 areas:
   card_size: 300px
   customize:
-    Bedroom:
-      color: green
-      domain_favorites:
-        - light
-      icon: mdi:grass
-      location: Outdoor
-      priority: 1
     Bathroom:
       location: Test
       color: green

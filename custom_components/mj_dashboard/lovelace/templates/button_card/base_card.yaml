@@ -23,7 +23,6 @@ mj_base_card:
       - --card-icon-size: var(--mj-card-icon-size, 2em)
       - --card-padding: var(--mj-card-padding, 1.1em)
       - --masonry-view-card-margin: 0
-      - --mdc-ripple-color: var(--mj-card-ripple-color)
       - background: var(--ha-card-background)
       - font-size: var(--card-font-size-base)
       - height: 100%

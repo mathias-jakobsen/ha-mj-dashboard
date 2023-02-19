@@ -2,7 +2,7 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 #-----------------------------------------------------------#
@@ -17,6 +17,6 @@ class MJ_UserEntitiesConfig:
     #       Fields
     #--------------------------------------------#
 
-    customize: dict[str, dict] = field(default_factory=dict)
-    exclude: list[str] = field(default_factory=list)
-    favorites: list[str] = field(default_factory=list)
+    customize: dict[str, dict]
+    exclude: list[str]
+    favorites: list[str]

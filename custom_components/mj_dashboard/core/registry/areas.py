@@ -44,7 +44,7 @@ class MJ_AreaRegistryEntry:
     name: str
     _: KW_ONLY
     color: str | None = None
-    domain_favorites: list[str] = field(default_factory=list)
+    domain_favorites: list[str] | None = None
     icon: str | None = None
     location: str | None = None
     priority: int = 1

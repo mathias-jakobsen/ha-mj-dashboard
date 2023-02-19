@@ -2,7 +2,7 @@
 #       Imports
 #-----------------------------------------------------------#
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 #-----------------------------------------------------------#
@@ -17,11 +17,11 @@ class MJ_AreasUserConfig:
     #       Fields
     #--------------------------------------------#
 
-    card_size: str = "300px"
-    customize: dict[str, dict] = field(default_factory=dict)
-    customize_global: dict = field(default_factory=dict)
-    exclude: list[str] = field(default_factory=list)
-    locations: list[str] = field(default_factory=list)
+    card_size: str
+    customize: dict[str, dict]
+    customize_global: dict
+    exclude: list[str]
+    locations: list[str]
 
 
 
