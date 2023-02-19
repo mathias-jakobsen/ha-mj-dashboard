@@ -31,6 +31,7 @@ class MJ_UserConfig:
         """ Gets the voluptuous schema. """
         return vol.Schema({
             vol.Required("areas", default={}): {
+                vol.Required("card_size", default="300px"): str,
                 vol.Required("customize", default={}): {str: {
                     vol.Optional("color"): str,
                     vol.Optional("domain_favorites", default=[]): [str],
@@ -46,10 +47,15 @@ class MJ_UserConfig:
             }},
 
             vol.Required("domains", default={}): {
+                vol.Required("card_size", default="300px"): str,
                 vol.Required("customize"): {str: {
+                    vol.Optional("card_size"): str,
                     vol.Optional("color"): str,
                     vol.Optional("icon"): str
                 }},
+                vol.Required("customize_global", default={}): {
+                    vol.Optional("card_size", default="160px"): str
+                },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("favorites", default=[]): [str]
             },

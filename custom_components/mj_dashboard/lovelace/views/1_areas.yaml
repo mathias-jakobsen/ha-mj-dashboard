@@ -43,7 +43,7 @@
             layout_type: grid
             layout:
               grid-gap: var(--mj-layout-grid-gap)
-              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+              grid-template-columns: repeat(auto-fit, minmax({{ mj.areas.card_size }}, 1fr))
               margin: 0
               padding: 0
             cards:

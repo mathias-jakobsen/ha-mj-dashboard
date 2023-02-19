@@ -89,7 +89,7 @@ class MJ_AreaRegistry:
             if area.id in config.areas.exclude or area.name in config.areas.exclude:
                 continue
 
-            area_config = config.areas.customize.get(area.id, config.areas.customize.get(area.name, {})) | config.areas.customize_global
+            area_config = config.areas.customize_global | config.areas.customize.get(area.id, config.areas.customize.get(area.name, {}))
             new_entry = MJ_AreaRegistryEntry(
                 id=area.id,
                 name=area.name,
@@ -121,6 +121,11 @@ class MJ_AreaRegistry:
     def areas(self) -> dict[str, MJ_AreaRegistryEntry]:
         """ Gets the areas. """
         return self._areas
+
+    @property
+    def card_size(self) -> str:
+        """ Gets the card size. """
+        return self._config.areas.card_size
 
 
     #--------------------------------------------#

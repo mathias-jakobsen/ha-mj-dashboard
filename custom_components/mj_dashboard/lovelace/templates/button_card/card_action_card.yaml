@@ -1,0 +1,19 @@
+mj_card_action_card:
+  template: mj_base_card
+
+  variables:
+    mj_color: var(--app-header-background-color)
+    mj_color_always: true
+    mj_color_icon: false
+    mj_color_opacity: 1
+
+  show_icon: true
+  show_label: false
+  show_name: false
+  show_state: false
+
+  styles:
+    grid:
+      - grid-template: >
+          "i" 1fr / 1fr
+

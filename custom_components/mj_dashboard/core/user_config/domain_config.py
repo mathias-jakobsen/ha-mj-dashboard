@@ -17,6 +17,8 @@ class MJ_UserDomainsConfig:
     #       Fields
     #--------------------------------------------#
 
+    card_size: str = "300px"
     customize: dict[str, dict] = field(default_factory=dict)
+    customize_global: dict = field(default_factory=dict)
     exclude: list[str] = field(default_factory=list)
     favorites: list[str] = field(default_factory=list)

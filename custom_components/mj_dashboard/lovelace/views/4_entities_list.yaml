@@ -48,7 +48,7 @@
             layout_type: grid
             layout:
               grid-gap: var(--mj-layout-grid-gap)
-              grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))
+              grid-template-columns: repeat(auto-fill, minmax({{ domain.card_size }}, 1fr))
               margin: 0
             cards:
               {% if device_class or loop.index > 1 %}

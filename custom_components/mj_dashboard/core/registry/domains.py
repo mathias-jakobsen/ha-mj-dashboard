@@ -57,6 +57,7 @@ class MJ_DomainRegistryEntry:
     """ A class representing a domain entry. """
     id: str
     _: KW_ONLY
+    card_size: str | None = None
     color: str | None = None
     icon: str | None = None
 
@@ -88,6 +89,16 @@ class MJ_DomainRegistry:
 
 
     #--------------------------------------------#
+    #       Properties
+    #--------------------------------------------#
+
+    @property
+    def card_size(self) -> str:
+        """ Gets the card size. """
+        return self._config.domains.card_size
+
+
+    #--------------------------------------------#
     #       Private Methods
     #--------------------------------------------#
 
@@ -99,7 +110,7 @@ class MJ_DomainRegistry:
             if domain in config.domains.exclude:
                 continue
 
-            domain_config = config.domains.customize.get(domain, {})
+            domain_config = config.domains.customize_global | config.domains.customize.get(domain, {})
 
             new_entry = MJ_DomainRegistryEntry(
                 id=domain,
@@ -123,7 +134,6 @@ class MJ_DomainRegistry:
 
     def get_by_id(self, id: str) -> MJ_DomainRegistryEntry | None:
         """ Gets a domain by id. """
-        LOGGER.debug(id)
         return self._domains.get(id, None)
 
     def update(self, config: MJ_UserConfig = None) -> None:

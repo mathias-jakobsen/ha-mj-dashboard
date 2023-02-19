@@ -1,4 +1,5 @@
 areas:
+  card_size: 300px
   customize:
     Bedroom:
       color: green

@@ -18,6 +18,7 @@ mj_title_card:
       - box-shadow: none
       - margin: 5px 5px 0 5px
       - padding: 0
+      - pointer-events: none
     grid:
       - grid-template: >
           "l"
