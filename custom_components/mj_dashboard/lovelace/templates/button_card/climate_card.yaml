@@ -9,7 +9,7 @@ mj_climate_card:
       [[[
         const temperature = `${entity.attributes.current_temperature} ${hass.config.unit_system.temperature}`;
         const hvac_action = entity.state == "off" ? "off" : entity.attributes.hvac_action;
-        return hvac_action != "undefined" ? `${temperature} • ${hvac_action}` : `${temperature}`;
+        return hvac_action != undefined ? `${temperature} • ${hvac_action}` : `${temperature}`;
       ]]]
 
   custom_fields:
@@ -18,7 +18,7 @@ mj_climate_card:
         type: custom:layout-card
         layout_type: grid
         layout:
-          grid-gap: var(--card-grid-gap)
+          grid-gap: var(--mj-card-grid-gap)
           grid-template: >
             "temp_down target_temp temp_up"
             "hvac_modes hvac_modes hvac_modes" / 1fr 1fr 1fr
@@ -35,7 +35,7 @@ mj_climate_card:
               service: climate.set_temperature
               service_data:
                 entity_id: "[[[ return entity.entity_id; ]]]"
-                temperature: "[[[ return parseFloat(entity.attributes.temperature) - (entity.attributes.target_temp_step || 0.5); ]]]"
+                temperature: "[[[ return parseFloat(entity.attributes.temperature) - (entity.attributes.target_temp_step ?? 0.5); ]]]"
 
           - view_layout:
               grid_area: target_temp
@@ -53,14 +53,14 @@ mj_climate_card:
               service: climate.set_temperature
               service_data:
                 entity_id: "[[[ return entity.entity_id; ]]]"
-                temperature: "[[[ return parseFloat(entity.attributes.temperature) + (entity.attributes.target_temp_step || 0.5); ]]]"
+                temperature: "[[[ return parseFloat(entity.attributes.temperature) + (entity.attributes.target_temp_step ?? 0.5); ]]]"
 
           - view_layout:
               grid-area: hvac_modes
             type: custom:layout-card
             layout_type: grid
             layout:
-              grid-gap: var(--card-grid-gap)
+              grid-gap: var(--mj-card-grid-gap)
               grid-template-columns: "[[[ return `repeat(${entity.attributes.hvac_modes.length}, 1fr)`; ]]]"
               margin: 0
             cards: >
@@ -68,13 +68,17 @@ mj_climate_card:
                 const result = [];
                 const hvac_mode_icons = {
                   auto: "mdi:calendar-sync",
+                  heat_cool: "mdi:sun-snowflake",
                   heat: "mdi:fire",
                   cool: "mdi:snowflake",
-                  heat_cool: "mdi:sun-snowflake",
                   off: "mdi:power"
                 }
 
-                for (const hvac_mode of entity.attributes.hvac_modes) {
+                for (const hvac_mode of Object.keys(hvac_mode_icons)) {
+                  if (entity.attributes.hvac_modes.includes(hvac_mode) == false) {
+                    continue;
+                  }
+
                   let button = {
                     type: "custom:button-card",
                     template: "mj_card_action_card",
@@ -112,5 +116,5 @@ mj_climate_card:
             return false;
           }
 
-          return variables.mj_color_always || entity.attributes.hvac_action == "heating";
+          return variables.mj_color_always || [undefined, "heating", "cooling"].includes(entity.attributes.hvac_action);
         ]]]

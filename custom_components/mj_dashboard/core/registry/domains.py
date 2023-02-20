@@ -118,7 +118,7 @@ class MJ_DomainRegistry:
             )
 
             if new_entry.color is None:
-                new_entry.color = f"var(--mj-color-{domain}, var(--primary-color))"
+                new_entry.color = f"var(--mj-color-{domain.replace('_', '-')}, var(--primary-color))"
 
             if new_entry.icon is None:
                 new_entry.icon = DEFAULT_DOMAIN_ICONS.get(domain, DEFAULT_DOMAIN_ICON)
