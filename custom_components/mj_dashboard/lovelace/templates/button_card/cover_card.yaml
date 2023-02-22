@@ -3,7 +3,7 @@ mj_cover_card:
 
   variables:
     mj_color_always: true
-    mj_color_background: "[[[ return entity.state != 'unknown'; ]]]"
+    mj_color_background: "[[[ return ['closing', 'opening'].includes(entity.state); ]]]"
 
   custom_fields:
     extra_row:
