@@ -31,6 +31,7 @@ mj_dashboard: &mj_dashboard
 
   # ---- Card Action ------
   mj-card-action-border-radius: 12px
+  mj-card-action-icon-size: 1.5em
 
   # ---- Card Title ------
   mj-card-title-font-size-primary: 1.1em

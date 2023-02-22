@@ -14,6 +14,7 @@ mj_card_action_card:
 
   styles:
     card:
+      - --card-icon-size: var(--mj-card-action-icon-size, 1.5em)
       - padding: 0.6em
       - pointer-events: auto
     grid:
