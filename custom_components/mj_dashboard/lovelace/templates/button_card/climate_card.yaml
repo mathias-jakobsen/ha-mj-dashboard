@@ -2,8 +2,7 @@ mj_climate_card:
   template: mj_entity_card
 
   variables:
-    mj_color: "[[[ return `var(--mj-color-climate-hvac-mode-${entity.state})`; ]]]"
-    mj_color_icon: true
+    mj_color: "[[[ return `var(--mj-color-climate-hvac-mode-${entity.state}, var(--mj-color-climate, var(--primary-color)))`; ]]]"
 
   state_display: >
       [[[

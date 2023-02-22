@@ -2,7 +2,7 @@ mj_entity_card:
   template: mj_base_card
 
   variables:
-    mj_color: var(--primary-color)
+    mj_color: "[[[ return `var(--mj-color-${entity?.entity_id?.split('.')[0].replace('_', '-')}, var(--primary-color))`; ]]]"
     mj_nested: false
     mj_swap_name_state: false
     mj_vertical_layout: false

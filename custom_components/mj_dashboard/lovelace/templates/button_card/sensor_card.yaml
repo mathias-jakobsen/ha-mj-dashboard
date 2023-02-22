@@ -2,7 +2,7 @@ mj_sensor_card:
   template: mj_entity_card
 
   variables:
-    mj_color: "[[[ return `var(--mj-color-sensor-${entity.attributes.device_class}, var(--primary-color))`; ]]]"
+    mj_color: "[[[ return `var(--mj-color-sensor-${entity.attributes.device_class}, var(--mj-color-sensor, var(--primary-color)))`; ]]]"
     mj_color_always: true
     mj_color_icon: true
     mj_swap_name_state: true

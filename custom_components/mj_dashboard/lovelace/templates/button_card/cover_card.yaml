@@ -1,0 +1,51 @@
+mj_cover_card:
+  template: mj_entity_card
+
+  variables:
+    mj_color_always: true
+    mj_color_background: "[[[ return entity.state != 'unknown'; ]]]"
+
+  custom_fields:
+    extra_row:
+      card:
+        type: custom:layout-card
+        layout_type: grid
+        layout:
+          grid-auto-columns: 1fr
+          grid-auto-flow: column
+          grid-gap: var(--mj-card-grid-gap)
+          margin: 0
+          padding: 0
+        cards:
+          - view_layout:
+              show: "[[[ return entity.attributes.supported_features & 1; ]]]"
+            type: custom:button-card
+            template: mj_card_action_card
+            icon: mdi:arrow-up-thick
+            tap_action:
+              action: call-service
+              service: cover.open_cover
+              service_data:
+                entity_id: "[[[ return entity.entity_id; ]]]"
+
+          - view_layout:
+              show: "[[[ return entity.attributes.supported_features & 8; ]]]"
+            type: custom:button-card
+            template: mj_card_action_card
+            icon: mdi:stop
+            tap_action:
+              action: call-service
+              service: cover.stop_cover
+              service_data:
+                entity_id: "[[[ return entity.entity_id; ]]]"
+
+          - view_layout:
+              show: "[[[ return entity.attributes.supported_features & 2; ]]]"
+            type: custom:button-card
+            template: mj_card_action_card
+            icon: mdi:arrow-down-thick
+            tap_action:
+              action: call-service
+              service: cover.close_cover
+              service_data:
+                entity_id: "[[[ return entity.entity_id; ]]]"

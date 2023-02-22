@@ -3,7 +3,6 @@ mj_domain_card:
 
   variables:
     mj_color_background: false
-    mj_color_icon: true
     mj_navigation_path: null
 
   tap_action:

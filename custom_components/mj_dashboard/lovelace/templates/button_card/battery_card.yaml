@@ -30,4 +30,3 @@ mj_sensor_battery_card:
         }
         return true;
       ]]]
-    mj_color_icon: true
