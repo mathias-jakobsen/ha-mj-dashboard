@@ -32,42 +32,34 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: 1fr
+          grid-template-columns: repeat(auto-fit, minmax({{ mj.areas.card_size }}, 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
           {% for location, areas in mj.areas.group_by_location() %}
           {% set areas_entities_count = mj.entities.get_by_area(areas) | rejectattr("hidden", "true") | list | count %}
           {% if areas_entities_count > 0 %}
-          - type: custom:layout-card
-            layout_type: grid
-            layout:
-              grid-gap: var(--mj-layout-grid-gap)
-              grid-template-columns: repeat(auto-fit, minmax({{ mj.areas.card_size }}, 1fr))
-              margin: 0
-              padding: 0
-            cards:
-              - type: custom:button-card
-                view_layout:
-                  grid-column: 1/-1
-                template: mj_title_card
-                label: {{ mj.translations["area_location_" ~ location] | default(location.replace("_", " ")) | title }}
+          - type: custom:button-card
+            view_layout:
+              grid-column: 1/-1
+            template: mj_title_card
+            label: {{ mj.translations["area_location_" ~ location] | default(location.replace("_", " ")) | title }}
 
-              {% for area in areas %}
-              {% set area_entities = mj.entities.get_by_area(area) | rejectattr("hidden", "true") | list %}
-              {% set area_entities_count = area_entities | count %}
-              {% if area_entities_count > 0 %}
-              - type: custom:button-card
-                template: mj_area_card
-                icon: {{ area.icon }}
-                name: {{ area.name }}
-                state_display: {{ area_entities_count }} {{ area_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
-                variables:
-                  {% if area.color is not none %}
-                  mj_color: {{ area.color }}
-                  {% endif %}
-                  mj_navigation_path: areas_{{ area.id }}
+          {% for area in areas %}
+          {% set area_entities = mj.entities.get_by_area(area) | rejectattr("hidden", "true") | list %}
+          {% set area_entities_count = area_entities | count %}
+          {% if area_entities_count > 0 %}
+          - type: custom:button-card
+            template: mj_area_card
+            icon: {{ area.icon }}
+            name: {{ area.name }}
+            state_display: {{ area_entities_count }} {{ area_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
+            variables:
+              {% if area.color is not none %}
+              mj_color: {{ area.color }}
               {% endif %}
-              {% endfor %}
+              mj_navigation_path: areas_{{ area.id }}
+          {% endif %}
+          {% endfor %}
           {% endif %}
           {% endfor %}

@@ -32,7 +32,7 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: 1fr
+          grid-template-columns: repeat(auto-fill, minmax({{ mj.domains.card_size }}, 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
@@ -51,33 +51,25 @@
           {% endif %}
 
           {% for title, domains in grouped_domains.items() %}
-          - type: custom:layout-card
-            layout_type: grid
-            layout:
-              grid-gap: var(--mj-layout-grid-gap)
-              grid-template-columns: repeat(auto-fill, minmax({{ mj.domains.card_size }}, 1fr))
-              margin: 0
-              padding: 0
-            cards:
-              {% if not (loop.first and loop.last) %}
-              - type: custom:button-card
-                view_layout:
-                  grid-column: 1/-1
-                template: mj_title_card
-                label: {{ mj.translations[title] }}
-              {% endif %}
+          {% if not (loop.first and loop.last) %}
+          - type: custom:button-card
+            view_layout:
+              grid-column: 1/-1
+            template: mj_title_card
+            label: {{ mj.translations[title] }}
+          {% endif %}
 
-              {% for domain in domains %}
-              {% set domain_entities_count = mj.entities.get_by_domain(domain.id) | count %}
-              {% if domain_entities_count > 0 %}
-              - type: custom:button-card
-                template: mj_domain_card
-                icon: {{ domain.icon }}
-                name: {{ mj.translations["domain_" ~ domain.id] | default(domain.id.replace("_", " ")) | title }}
-                state_display: {{ domain_entities_count }} {{ domain_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
-                variables:
-                  mj_color: {{ domain.color }}
-                  mj_navigation_path: entities_{{ domain.id }}
-              {% endif %}
-              {% endfor %}
+          {% for domain in domains %}
+          {% set domain_entities_count = mj.entities.get_by_domain(domain.id) | count %}
+          {% if domain_entities_count > 0 %}
+          - type: custom:button-card
+            template: mj_domain_card
+            icon: {{ domain.icon }}
+            name: {{ mj.translations["domain_" ~ domain.id] | default(domain.id.replace("_", " ")) | title }}
+            state_display: {{ domain_entities_count }} {{ domain_entities_count == 1 and mj.translations.entity or mj.translations.entities }}
+            variables:
+              mj_color: {{ domain.color }}
+              mj_navigation_path: entities_{{ domain.id }}
+          {% endif %}
+          {% endfor %}
           {% endfor %}

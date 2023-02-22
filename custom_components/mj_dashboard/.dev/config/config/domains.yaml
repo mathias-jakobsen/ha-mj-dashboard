@@ -7,8 +7,8 @@ domains:
       card_size: 160px
     media_player:
       card_size: 450px
-  #customize_global:
-    #card_size: 160px
+  customize_global:
+    card_size: 190px
   exclude:
     - persistent_notification
   favorites:

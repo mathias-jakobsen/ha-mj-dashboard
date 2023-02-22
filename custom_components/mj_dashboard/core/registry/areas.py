@@ -143,18 +143,21 @@ class MJ_AreaRegistry:
     def group_by_location(self) -> list[tuple[str, list[MJ_AreaRegistryEntry]]]:
         """ Gets a list of areas grouped by location. """
         result: dict[str, list[MJ_AreaRegistryEntry]] = { location: [] for location in self._config.areas.locations }
+        result_others: list[MJ_AreaRegistryEntry] = []
 
         for area in self._areas.values():
             location = area.location
 
             if location is None:
-                location = "__others__"
+                result_others.append(area)
+                continue
 
             if not location in result:
                 result[location] = []
 
             result[location].append(area)
 
+        result["__others__"] = result_others
         return result.items()
 
     def update(self, config: MJ_UserConfig = None) -> None:
