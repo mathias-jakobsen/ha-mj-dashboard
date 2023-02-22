@@ -18,7 +18,7 @@ mj_cover_card:
           padding: 0
         cards:
           - view_layout:
-              show: "[[[ return entity.attributes.supported_features & 1; ]]]"
+              show: "[[[ return entity.attributes.supported_features & 1 == 1; ]]]"
             type: custom:button-card
             template: mj_card_action_card
             icon: mdi:arrow-up-thick
@@ -29,7 +29,7 @@ mj_cover_card:
                 entity_id: "[[[ return entity.entity_id; ]]]"
 
           - view_layout:
-              show: "[[[ return entity.attributes.supported_features & 8; ]]]"
+              show: "[[[ return entity.attributes.supported_features & 8 == 8; ]]]"
             type: custom:button-card
             template: mj_card_action_card
             icon: mdi:stop
@@ -40,7 +40,7 @@ mj_cover_card:
                 entity_id: "[[[ return entity.entity_id; ]]]"
 
           - view_layout:
-              show: "[[[ return entity.attributes.supported_features & 2; ]]]"
+              show: "[[[ return entity.attributes.supported_features & 2 == 2; ]]]"
             type: custom:button-card
             template: mj_card_action_card
             icon: mdi:arrow-down-thick
