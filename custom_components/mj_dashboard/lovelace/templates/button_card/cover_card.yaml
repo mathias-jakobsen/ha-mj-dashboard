@@ -21,7 +21,7 @@ mj_cover_card:
               show: "[[[ return entity.attributes.supported_features & 1 ? 'always' : 'never'; ]]]"
             type: custom:button-card
             template: mj_card_action_card
-            icon: mdi:arrow-up-thick
+            icon: "[[[ return ['blind', 'damper', 'garage', 'shade', 'shutter', 'window'].includes(entity.attributes.device_class) ? 'mdi:arrow-up' : 'mdi:arrow-expand-horizontal'; ]]]"
             tap_action:
               action: call-service
               service: cover.open_cover
@@ -43,7 +43,7 @@ mj_cover_card:
               show: "[[[ return entity.attributes.supported_features & 2 ? 'always' : 'never'; ]]]"
             type: custom:button-card
             template: mj_card_action_card
-            icon: mdi:arrow-down-thick
+            icon: "[[[ return ['blind', 'damper', 'garage', 'shade', 'shutter', 'window'].includes(entity.attributes.device_class) ? 'mdi:arrow-down' : 'mdi:arrow-collapse-horizontal'; ]]]"
             tap_action:
               action: call-service
               service: cover.close_cover

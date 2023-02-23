@@ -8,7 +8,7 @@ mj_climate_card:
       [[[
         const temperature = `${entity.attributes.current_temperature} ${hass.config.unit_system.temperature}`;
         const hvac_action = entity.state == "off" ? "off" : entity.attributes.hvac_action;
-        return hvac_action != undefined ? `${temperature} • ${hvac_action}` : `${temperature}`;
+        return hvac_action != undefined ? `${temperature} • ${hvac_action}` : `${temperature} • ${entity.state}`;
       ]]]
 
   custom_fields:
