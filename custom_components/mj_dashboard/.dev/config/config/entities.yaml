@@ -15,3 +15,5 @@ entities:
         ok:
           color: rgb(1, 200, 82)
           value: 100
+    weather:
+      entity: weather.forecast_home

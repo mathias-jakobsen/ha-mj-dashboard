@@ -1,0 +1,32 @@
+mj_glance_card:
+  template: mj_base_card
+
+  show_icon: true
+  show_name: true
+  show_state: true
+
+  aspect_ratio: 1/1
+
+  variables:
+    mj_color: purple
+    mj_color_always: true
+
+  styles:
+    card:
+      - --card-icon-size: 2.4em
+      - --card-padding: 0.6em
+    grid:
+      - grid-gap: 0 var(--card-grid-gap)
+      - grid-template: >
+          "i ." auto
+          "n ." 1fr
+          "s ." auto / auto 1fr
+      - height: 100%
+    img_cell:
+      - place-self: start
+    name:
+      - place-self: end start
+    state:
+      - place-self: center start
+
+

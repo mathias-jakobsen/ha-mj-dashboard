@@ -2,7 +2,7 @@ mj_base_card:
   template: mj_base_typography
 
   variables:
-    mj_color: var(--ha-card-background)
+    mj_color: var(--primary-text-color)
     mj_color_always: false
     mj_color_background: true
     mj_color_icon: true
@@ -89,6 +89,10 @@ mj_base_card:
       value: >
         [[[
           if (["none", "transparent", "undefined"].includes(variables.mj_color)) {
+            return false;
+          }
+
+          if (variables.mj_color_always == false && entity == undefined) {
             return false;
           }
 

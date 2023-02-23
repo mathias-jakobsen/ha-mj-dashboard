@@ -62,12 +62,12 @@ class MJ_UserConfig:
 
             vol.Required("entities", default={}): {
                 vol.Required("customize", default={}): {
-                    vol.Required("battery", default={}): {
+                    vol.Required("battery", default={}): vol.Schema({
                         vol.Required("levels", default={}): {str: {
                             vol.Required("color"): str,
                             vol.Required("value"): vol.All(int, vol.Range(min=0, max=100))
                         }}
-                    }
+                    }, extra=vol.ALLOW_EXTRA)
                 },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("favorites", default=[]): [str]
