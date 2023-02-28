@@ -34,8 +34,8 @@ mj_light_card:
             - cursor: grab
             - opacity: 0
             - pointer-events: auto
-            - right: -10px
-            - width: 30px
+            - right: -5px
+            - width: 10px
           track:
             - background: transparent
 
