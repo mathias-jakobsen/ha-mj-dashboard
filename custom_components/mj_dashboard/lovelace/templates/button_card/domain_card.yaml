@@ -6,6 +6,9 @@ mj_domain_card:
     mj_color_background: false
     mj_navigation_path: null
 
+  hold_action:
+    action: none
+
   tap_action:
     action: "[[[ return variables.mj_navigation_path !== null ? 'navigate' : 'none'; ]]]"
     navigation_path: "[[[ return variables.mj_navigation_path; ]]]"

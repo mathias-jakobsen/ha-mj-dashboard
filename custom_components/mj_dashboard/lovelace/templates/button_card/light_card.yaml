@@ -2,7 +2,7 @@ mj_light_card:
   template: mj_entity_card
 
   variables:
-    mj_color: var(--button-card-light-color)
+    mj_color: var(--button-card-light-color, var(--mj-color-light, var(--primary-color)))
     mj_color_icon: true
 
   state_display: >
