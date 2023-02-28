@@ -50,26 +50,21 @@
               type: custom:layout-card
               layout_type: grid
               layout:
-                grid-auto-columns: 130px
+                grid-auto-columns: 120px
                 grid-auto-flow: column
                 grid-gap: var(--mj-layout-grid-gap)
                 margin: 0
                 padding: 0 var(--mj-layout-view-padding-h)
               cards:
                 - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
+                  template: mj_glance_person_card
+
+                {% if mj.user_config.entities.customize.weather.entity is not none %}
                 - type: custom:button-card
-                  template: mj_glance_card
-                  name: Weather
-                  icon: mdi:weather-cloudy
-                  state_display: 23C* • Rainy
-                  variables:
-                    mj_color: lightgreen
+                  template: mj_glance_weather_card
+                  entity: {{ mj.user_config.entities.customize.weather.entity }}
+                {% endif %}
+
                 - type: custom:button-card
                   template: mj_glance_card
                   name: Cameras
@@ -85,41 +80,6 @@
                   variables:
                     mj_color: var(--mj-color-light)
 
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
 
           - type: custom:layout-card
             layout_type: grid

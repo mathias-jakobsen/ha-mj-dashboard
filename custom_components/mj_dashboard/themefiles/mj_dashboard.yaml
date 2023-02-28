@@ -63,6 +63,7 @@ mj_dashboard: &mj_dashboard
   mj-color-sensor-illuminance: hsl(270, 75%, 50%)
   mj-color-sensor-temperature: hsl(0, 75%, 50%)
   mj-color-sun: hsl(60, 75%, 50%)
+  mj-color-weather: hsl(83, 75%, 50%)
 
 
   #-----------------------------------------------------------#

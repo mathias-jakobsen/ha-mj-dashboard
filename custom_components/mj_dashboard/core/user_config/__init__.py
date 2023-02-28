@@ -67,7 +67,10 @@ class MJ_UserConfig:
                             vol.Required("color"): str,
                             vol.Required("value"): vol.All(int, vol.Range(min=0, max=100))
                         }}
-                    }, extra=vol.ALLOW_EXTRA)
+                    }, extra=vol.ALLOW_EXTRA),
+                    vol.Required("weather", default={}): {
+                        vol.Required("entity", default=None): vol.Any(str, None)
+                    }
                 },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("favorites", default=[]): [str]

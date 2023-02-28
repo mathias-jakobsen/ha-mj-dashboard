@@ -1,8 +1,6 @@
 entities:
-  exclude:
-    - light.bathroom_spotlight_1
-  favorites:
-    - light.bathroom_spotlight_2
+  exclude: []
+  favorites: []
   customize:
     battery:
       levels:

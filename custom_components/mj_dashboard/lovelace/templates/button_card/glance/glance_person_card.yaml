@@ -1,0 +1,15 @@
+# mj_dashboard
+
+mj_glance_person_card:
+  template: mj_glance_card
+
+  variables:
+    mj_color: var(--mj-color-person)
+
+  name: "{{ mj.translations.glance_person }}"
+  icon: mdi:account
+  state_display: >
+    [[[
+      const persons_home = Object.keys(states).filter(entity_id => entity_id.split(".")[0] == "person" && states[entity_id].state == "home");
+      return persons_home.length > 0 ? "{{ mj.translations.location_home }}" : "{{ mj.translations.location_away }}";
+    ]]]
