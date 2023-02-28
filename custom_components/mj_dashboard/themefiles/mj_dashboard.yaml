@@ -47,6 +47,7 @@ mj_dashboard: &mj_dashboard
   mj-layout-view-padding: var(--mj-layout-view-padding-v) var(--mj-layout-view-padding-h)
 
   # ---- Colors ------
+  mj-color-camera: hsl(200, 75%, 50%)
   mj-color-climate: hsl(0, 75%, 50%)
   mj-color-climate-hvac-mode-auto: hsl(120, 75%, 50%)
   mj-color-climate-hvac-mode-cool: hsl(210, 75%, 50%)

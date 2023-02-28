@@ -58,9 +58,23 @@
               cards:
                 - type: custom:button-card
                   template: mj_glance_card
+                  name: Persons
+                  icon: mdi:account
+                  state_display: Home
+                  variables:
+                    mj_color: purple
+                - type: custom:button-card
+                  template: mj_glance_card
                   name: Weather
                   icon: mdi:weather-cloudy
                   state_display: 23C* • Rainy
+                  variables:
+                    mj_color: lightgreen
+                - type: custom:button-card
+                  template: mj_glance_card
+                  name: Cameras
+                  icon: mdi:cctv
+                  state_display: 1 Streaming
                   variables:
                     mj_color: lightblue
                 - type: custom:button-card
@@ -70,6 +84,7 @@
                   state_display: 3 On
                   variables:
                     mj_color: var(--mj-color-light)
+
                 - type: custom:button-card
                   template: mj_glance_card
                   name: Persons
@@ -105,38 +120,17 @@
                   state_display: Home
                   variables:
                     mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Persons
-                  icon: mdi:account
-                  state_display: Home
-                  variables:
-                    mj_color: purple
+
+          - type: custom:layout-card
+            layout_type: grid
+            layout:
+              grid-gap: var(--mj-layout-grid-gap)
+              grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))
+              margin: 0
+              padding: var(--mj-layout-view-padding)
+            cards:
+              - type: custom:button-card
+                view_layout:
+                  grid-column: 1/-1
+                template: mj_title_card
+                label: {{ mj.translations.favorites }}

@@ -80,12 +80,13 @@ class MJ_UserConfig:
 
             vol.Required("navbar", default={}): {
                 vol.Required("buttons", default=[]): [{
+                    vol.Optional("color", default=None): vol.Any(str, None),
                     vol.Required("icon"): str,
                     vol.Required("navigation_path"): str,
                     vol.Required("title"): str
                 }],
-                vol.Required("num_buttons_desktop", default=4): vol.All(int, vol.Range(min=1)),
-                vol.Required("num_buttons_mobile", default=2): vol.All(int, vol.Range(min=1))
+                vol.Required("num_buttons_desktop", default=4): vol.All(int, vol.Range(min=0)),
+                vol.Required("num_buttons_mobile", default=2): vol.All(int, vol.Range(min=0))
             },
             vol.Required("weather", default={}): {
                 vol.Required("entities", default={}): {str: str}

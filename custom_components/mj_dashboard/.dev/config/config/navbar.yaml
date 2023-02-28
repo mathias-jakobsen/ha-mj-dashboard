@@ -1,13 +1,11 @@
 navbar:
-  num_buttons_desktop: 1
+  num_buttons_desktop: 2
   num_buttons_mobile: 1
   buttons:
     - title: Car
       icon: mdi:car
       navigation_path: car
-    - title: Car
-      icon: mdi:car
-      navigation_path: car
-    - title: Car
-      icon: mdi:car
-      navigation_path: car
+      color: green
+    - title: Test1
+      icon: mdi:home
+      navigation_path: test1

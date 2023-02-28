@@ -6,6 +6,7 @@ mj_navbar_button_card:
     mj_color_background: false
     mj_color_icon: true
     mj_navigation_path: null
+    mj_navigation_active_paths: []
 
   show_icon: true
   show_label: true
@@ -28,15 +29,15 @@ mj_navbar_button_card:
           "i" 1fr
           "l" auto / 1fr
     icon:
-      - filter: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'brightness(30%) saturate(250%)' : 'none'; ]]]"
+      - filter: "[[[ return [variables.mj_navigation_path, ...variables.mj_navigation_active_paths].some(path => window.location.pathname.startsWith(path)) ? 'brightness(30%) saturate(250%)' : 'none'; ]]]"
     img_cell:
-      - background: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--primary-color)' : 'transparent'; ]]]"
-      - color: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--primary-color)' : 'var(--card-text-color-tertiary)'; ]]]"
+      - background: "[[[ return [variables.mj_navigation_path, ...variables.mj_navigation_active_paths].some(path => window.location.pathname.startsWith(path)) ? 'var(--primary-color)' : 'transparent'; ]]]"
+      - color: "[[[ return [variables.mj_navigation_path, ...variables.mj_navigation_active_paths].some(path => window.location.pathname.startsWith(path)) ? 'var(--primary-color)' : 'var(--card-text-color-tertiary)'; ]]]"
       - border-radius: 20px
       - padding: 0.3em
       - width: 100%
     label:
-      - color: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--card-text-color-primary)' : 'var(--card-text-color-tertiary)'; ]]]"
+      - color: "[[[ return [variables.mj_navigation_path, ...variables.mj_navigation_active_paths].some(path => window.location.pathname.startsWith(path)) ? 'var(--card-text-color-primary)' : 'var(--card-text-color-tertiary)'; ]]]"
       - font-size: 1em
-      - font-weight: "[[[ return window.location.pathname.startsWith(variables.mj_navigation_path) ? 'var(--card-font-weight-primary)' : 'var(--card-font-weight-secondary)'; ]]]"
+      - font-weight: "[[[ return [variables.mj_navigation_path, ...variables.mj_navigation_active_paths].some(path => window.location.pathname.startsWith(path)) ? 'var(--card-font-weight-primary)' : 'var(--card-font-weight-secondary)'; ]]]"
 

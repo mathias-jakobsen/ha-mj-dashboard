@@ -56,6 +56,7 @@ card:
         mj_navigation_path: /{{ mj.dashboard_url }}/entities
 
     {% for button in mj.user_config.navbar.buttons %}
+    {% if loop.index <= mj.user_config.navbar.num_buttons_desktop %}
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: {{ button.icon }}
@@ -63,13 +64,11 @@ card:
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
       view_layout:
-        {% if loop.index <= mj.user_config.navbar.num_buttons_desktop %}
         show:
           mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
-        {% else %}
-        show: never
-        {% endif %}
+    {% endif %}
 
+    {% if loop.index <= mj.user_config.navbar.num_buttons_mobile %}
     - type: custom:button-card
       template: mj_navbar_button_card
       icon: {{ button.icon }}
@@ -77,14 +76,16 @@ card:
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/{{ button.navigation_path }}
       view_layout:
-        {% if loop.index <= mj.user_config.navbar.num_buttons_mobile %}
         show:
           mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
-        {% else %}
-        show: never
-        {% endif %}
+    {% endif %}
     {% endfor %}
 
+
+    {% set ns = namespace(more_paths=[]) %}
+    {% for path in mj.user_config.navbar.buttons | map(attribute="navigation_path") %}
+      {% set ns.more_paths = ns.more_paths + ["/" ~ mj.dashboard_url ~ "/" ~ path] %}
+    {% endfor %}
 
     {% if mj.user_config.navbar.buttons | count > mj.user_config.navbar.num_buttons_desktop %}
     - type: custom:button-card
@@ -93,6 +94,7 @@ card:
       label: More
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/more
+        mj_navigation_active_paths: {{ ns.more_paths[mj.user_config.navbar.num_buttons_desktop:] }}
       view_layout:
         show:
           mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
@@ -105,6 +107,7 @@ card:
       label: More
       variables:
         mj_navigation_path: /{{ mj.dashboard_url }}/more
+        mj_navigation_active_paths: {{ ns.more_paths[mj.user_config.navbar.num_buttons_mobile:] }}
       view_layout:
         show:
           mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
