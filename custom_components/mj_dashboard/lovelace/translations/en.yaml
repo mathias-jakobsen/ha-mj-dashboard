@@ -57,6 +57,7 @@ entities: entities
 #       Glances
 #-----------------------------------------------------------#
 
+glance_light: Lights
 glance_person: Persons
 glance_weather: Weather
 
@@ -65,8 +66,8 @@ glance_weather: Weather
 #       Lights
 #-----------------------------------------------------------#
 
-light_on: Light on
-lights_on: Lights on
+light_on: "On"
+lights_on: "On"
 
 
 #-----------------------------------------------------------#

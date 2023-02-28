@@ -66,19 +66,17 @@
                 {% endif %}
 
                 - type: custom:button-card
+                  template: mj_glance_light_card
+
+                - type: custom:button-card
                   template: mj_glance_card
                   name: Cameras
                   icon: mdi:cctv
                   state_display: 1 Streaming
                   variables:
                     mj_color: lightblue
-                - type: custom:button-card
-                  template: mj_glance_card
-                  name: Lights
-                  icon: mdi:lightbulb-on
-                  state_display: 3 On
-                  variables:
-                    mj_color: var(--mj-color-light)
+
+
 
 
           - type: custom:layout-card

@@ -1,0 +1,27 @@
+# mj_dashboard
+
+mj_glance_light_card:
+  template: mj_glance_card
+  triggers_update: >
+    {{ mj.entities.get_by_domain("light") | map(attribute="entity_id") | list }}
+
+  card_mod:
+    style: |
+      {% raw %}
+      :host {
+        {% if states.light | selectattr("state", "eq", "on") | list | count == 0 %}
+        display: none !important;
+        {% endif %}
+      }
+      {% endraw %}
+
+  variables:
+    mj_color: var(--mj-color-light)
+
+  name: "{{ mj.translations.glance_light }}"
+  icon: mdi:lightbulb-on
+  state_display: >
+    [[[
+      const lights_on = Object.keys(states).filter(entity_id => entity_id.split(".")[0] == "light" && states[entity_id].state == "on");
+      return `${lights_on.length} ${lights_on.length == 1 ? "{{ mj.translations.light_on }}" : "{{ mj.translations.lights_on }}"}`;
+    ]]]
