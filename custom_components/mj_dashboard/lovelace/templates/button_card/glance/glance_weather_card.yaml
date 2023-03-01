@@ -19,7 +19,7 @@ mj_glance_weather_card:
   custom_fields:
     temperature: >
       [[[
-        return `<div style="display: flex; flex-flow: column; gap: 5px;">
+        return `<div style="align-items: end; display: flex; flex-flow: column; gap: 5px;">
           <div><ha-icon icon="mdi:thermometer" style="height: 1.3em; width: 1.3em;"></ha-icon>${entity.attributes.temperature} ${entity.attributes.temperature_unit}</div>
           <span><ha-icon icon="mdi:water-percent" style="height: 1.3em; width: 1.3em;"></ha-icon>${entity.attributes.humidity} %</span>
         </div>`;

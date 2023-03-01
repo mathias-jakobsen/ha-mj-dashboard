@@ -1,0 +1,9 @@
+|
+  ha-dialog$: |
+    mdc-dialog__container {
+      align-items: center;
+    }
+
+    mdc-dialog__surface {
+      margin-top: 0;
+    }

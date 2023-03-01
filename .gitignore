@@ -4,5 +4,6 @@ venv
 .venv
 .coverage
 .idea
+custom_components/browser_mod
 custom_components/hacs
 custom_components/mj_dashboard/.dev

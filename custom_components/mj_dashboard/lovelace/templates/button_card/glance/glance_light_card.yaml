@@ -2,8 +2,7 @@
 
 mj_glance_light_card:
   template: mj_glance_card
-  triggers_update: >
-    {{ mj.entities.get_by_domain("light") | map(attribute="entity_id") | list }}
+  triggers_update: all
 
   card_mod:
     style: |
@@ -25,3 +24,40 @@ mj_glance_light_card:
       const lights_on = Object.keys(states).filter(entity_id => entity_id.split(".")[0] == "light" && states[entity_id].state == "on");
       return `${lights_on.length} ${lights_on.length == 1 ? "{{ mj.translations.light_on }}" : "{{ mj.translations.lights_on }}"}`;
     ]]]
+
+  hold_action:
+    action: call-service
+    service: light.turn_off
+    service_data:
+      entity_id: "[[[ return Object.keys(states).filter(entity_id => entity_id.split('.')[0] == 'light' && states[entity_id].state == 'on'); ]]]"
+
+  tap_action:
+    action: "[[[ return Object.keys(hass.services).includes('browser_mod') ? 'fire-dom-event' : 'navigate'; ]]]"
+    navigation_path: /{{ mj.dashboard_url }}/entities_light
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: Lights On
+        content:
+          type: custom:auto-entities
+          card:
+            type: custom:layout-card
+            layout_type: grid
+            layout:
+              grid-gap: var(--mj-layout-grid-gap)
+              grid-template-columns: repeat(auto-fill, minmax({{ mj.domains.get_by_id("light").card_size }}, 1fr))
+              margin: 0
+              padding: 0
+          card_param: cards
+          filter:
+            include:
+              - domain: light
+                state: "on"
+                options:
+                  type: custom:button-card
+                  template: mj_light_card
+        right_button: Turn off lights
+        right_button_action:
+          service: light.turn_off
+          data:
+            entity_id: "[[[ return Object.keys(states).filter(entity_id => entity_id.split('.')[0] == 'light' && states[entity_id].state == 'on'); ]]]"
