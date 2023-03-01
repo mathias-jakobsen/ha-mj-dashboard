@@ -5,3 +5,7 @@ mj_weather_card:
       const state = entity.state.replace("partlycloudy", "partly-cloudy");
       return `mdi:weather-${state}`;
     ]]]
+  state_display: >
+    [[[
+      return entity.state.replace("partlycloudy", "partly cloudy");
+    ]]]

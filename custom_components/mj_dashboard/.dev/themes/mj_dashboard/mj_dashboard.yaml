@@ -20,7 +20,7 @@ mj_dashboard: &mj_dashboard
   mj-card-font-size-primary: 1.1em
   mj-card-font-size-secondary: 1em
   mj-card-font-size-tertiary: 0.82em
-  mj-card-font-weight-primary: 400
+  mj-card-font-weight-primary: 500
   mj-card-font-weight-secondary: 400
   mj-card-font-weight-tertiary: 450
   mj-card-grid-gap: 0.8em
@@ -64,7 +64,7 @@ mj_dashboard: &mj_dashboard
   mj-color-sensor-illuminance: hsl(270, 75%, 50%)
   mj-color-sensor-temperature: hsl(0, 75%, 50%)
   mj-color-sun: hsl(60, 75%, 50%)
-  mj-color-weather: hsl(83, 75%, 50%)
+  mj-color-weather: hsl(217, 75%, 50%)
 
 
   #-----------------------------------------------------------#

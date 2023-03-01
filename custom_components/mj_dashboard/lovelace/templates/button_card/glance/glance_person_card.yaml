@@ -6,7 +6,6 @@ mj_glance_person_card:
   variables:
     mj_color: var(--mj-color-person)
 
-  name: "{{ mj.translations.glance_person }}"
   icon: mdi:account
   state_display: >
     [[[

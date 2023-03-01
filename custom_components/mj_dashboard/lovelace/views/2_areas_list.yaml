@@ -38,10 +38,50 @@
           grid-gap: var(--mj-layout-grid-gap)
           grid-template-columns: 1fr
           margin: 0
-          padding: var(--mj-layout-view-padding)
+          padding: var(--mj-layout-view-padding-v) 0
         cards:
           {% set grouped_entities = dict(area_entities | groupby("domain")) %}
           {% set not_highlighted_domains = grouped_entities.keys() | reject("in", area.domain_favorites) | list %}
+
+
+          - type: custom:mod-card
+            style:
+              .: |
+                :host {
+                  overflow: auto;
+                }
+              layout-card$grid-layout$: |
+                #root *:last-child {
+                  padding-right: var(--mj-layout-view-padding-h);
+                  width: 100%
+                }
+            card:
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-auto-columns: max-content
+                grid-auto-flow: column
+                grid-gap: var(--mj-layout-grid-gap)
+                margin: 0
+                padding: 0 var(--mj-layout-view-padding-h)
+              cards:
+                - type: custom:button-card
+                  template: mj_glance_light_card
+                  variables:
+                    mj_color: var(--mj-color-light)
+                    mj_entities: {{ mj.entities.get_by_area(area) | selectattr("domain", "eq", "light") | map(attribute="entity_id") | list }}
+
+                - type: custom:button-card
+                  template: mj_glance_sensor_temperature_card
+                  variables:
+                    mj_entities: {{ mj.entities.get_by_area(area) | selectattr("device_class", "eq", "temperature") | map(attribute="entity_id") | list }}
+
+                - type: custom:button-card
+                  template: mj_glance_sensor_illuminance_card
+                  variables:
+                    mj_entities: {{ mj.entities.get_by_area(area) | selectattr("device_class", "eq", "illuminance") | map(attribute="entity_id") | list }}
+
+
           {% for domain in area.domain_favorites + not_highlighted_domains %}
           {% set domain_card_template = "mj_" ~ domain ~ "_card" %}
           {% set entities = grouped_entities[domain] %}
@@ -52,6 +92,7 @@
               grid-gap: var(--mj-layout-grid-gap)
               grid-template-columns: repeat(auto-fill, minmax({{ mj.domains.get_by_id(domain).card_size }}, 1fr))
               margin: 0
+              padding: 0 var(--mj-layout-view-padding-h)
             cards:
               - type: custom:button-card
                 view_layout:

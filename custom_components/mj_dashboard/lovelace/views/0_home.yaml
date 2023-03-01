@@ -50,7 +50,7 @@
               type: custom:layout-card
               layout_type: grid
               layout:
-                grid-auto-columns: 120px
+                grid-auto-columns: max-content
                 grid-auto-flow: column
                 grid-gap: var(--mj-layout-grid-gap)
                 margin: 0
@@ -67,10 +67,12 @@
 
                 - type: custom:button-card
                   template: mj_glance_light_card
+                  tap_action:
+                    action: navigate
+                    navigation_path: /{{ mj.dashboard_url }}/entities_light
 
                 - type: custom:button-card
                   template: mj_glance_card
-                  name: Cameras
                   icon: mdi:cctv
                   state_display: 1 Streaming
                   variables:
