@@ -32,7 +32,7 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
+          grid-template-columns: repeat(auto-fill, minmax(calc({{ mj.user_config.general.base_card_size }} * {{ mj.domains.card_size }}), 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
@@ -63,8 +63,6 @@
           {% set domain_entities_count = mj.entities.get_by_domain(domain.id) | count %}
           {% if domain_entities_count > 0 %}
           - type: custom:button-card
-            view_layout:
-              grid-column: auto / span {{ mj.domains.card_size }}
             template: mj_domain_card
             icon: {{ domain.icon }}
             name: {{ mj.translations["domain_" ~ domain.id] | default(domain.id.replace("_", " ")) | title }}

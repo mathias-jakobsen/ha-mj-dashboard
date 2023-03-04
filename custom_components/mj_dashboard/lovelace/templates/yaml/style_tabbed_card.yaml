@@ -65,6 +65,10 @@ tabbed-card$:
     }
   mwc-tab:
     $:
+      .: |
+        .mdc-tab__text-label {
+          color: var(--primary-text-color) !important;
+        }
       mwc-tab-indicator$: |
         .mdc-tab-indicator__content {
           background: var(--primary-color);
@@ -75,7 +79,4 @@ tabbed-card$:
 
         .mdc-tab-indicator--active .mdc-tab-indicator__content {
           opacity: 0.15 !important;
-        }
-        @media {{ mj.user_config.mediaquery.desktop }} {
-
         }

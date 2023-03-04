@@ -32,7 +32,7 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
+          grid-template-columns: repeat(auto-fill, minmax(calc({{ mj.user_config.general.base_card_size }} * {{ mj.areas.card_size }}), 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
@@ -50,8 +50,6 @@
           {% set area_entities_count = area_entities | count %}
           {% if area_entities_count > 0 %}
           - type: custom:button-card
-            view_layout:
-              grid-column: auto / span {{ mj.areas.card_size }}
             template: mj_area_card
             icon: {{ area.icon }}
             name: {{ area.name }}

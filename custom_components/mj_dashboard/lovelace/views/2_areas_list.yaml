@@ -69,7 +69,7 @@
                     {% set device_class_card_template = "mj_" ~ entity.domain ~ "_" ~ entity.device_class ~ "_card" %}
                     - type: custom:button-card
                       view_layout:
-                        grid-column: auto/span {{ mj.domains.get_by_id(entity.domain).card_size }}
+                        grid-column: auto / span {{ mj.domains.get_by_id(entity.domain).card_size }}
                       template:
                         {% if device_class_card_template in mj.button_card_templates %}
                         {{ device_class_card_template }}
@@ -120,7 +120,7 @@
                     {% for entity in entities | sort(attribute="device_class, name") %}
                     {% set device_class_card_template = "mj_" ~ domain ~ "_" ~ entity.device_class ~ "_card" %}
                     - type: custom:button-card
-                      view_template:
+                      view_layout:
                         grid-column: auto/span {{ mj.domains.get_by_id(domain).card_size }}
                       template:
                         {% if device_class_card_template in mj.button_card_templates %}
