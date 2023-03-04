@@ -1,14 +1,14 @@
 domains:
-  card_size: 300px
+  card_size: 2
   customize:
     climate:
-      card_size: 450px
-    light:
-      card_size: 160px
+      card_size: 3
     media_player:
-      card_size: 450px
+      card_size: 3
+    sensor:
+      card_size: 2
   customize_global:
-    card_size: 190px
+    card_size: 1
   exclude:
     - persistent_notification
   favorites:

@@ -1,9 +1,16 @@
 areas:
-  card_size: 300px
+  card_size: 2
   customize:
     Bathroom:
       location: Test
       color: green
+      entity_groups:
+        lights:
+          light: light.bathroom_spotlights
+        climate:
+          temperature: sensor.bathroom_motion_temperature
+          illuminance: sensor.bathroom_motion_illuminance_lux
+
   customize_global:
     domain_favorites:
       - scenes

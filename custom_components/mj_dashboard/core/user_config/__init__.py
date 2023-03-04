@@ -30,31 +30,36 @@ class MJ_UserConfig:
     def get_schema() -> vol.Schema:
         """ Gets the voluptuous schema. """
         return vol.Schema({
+            vol.Required("general", default={}): {
+                vol.Required("base_card_size", default="160px"): str
+            },
+
             vol.Required("areas", default={}): {
-                vol.Required("card_size", default="300px"): str,
+                vol.Required("card_size", default=2): int,
                 vol.Required("customize", default={}): {str: {
                     vol.Optional("color"): str,
                     vol.Optional("domain_favorites"): [str],
+                    vol.Optional("entity_groups"): {str: {str: str}},
                     vol.Optional("icon"): str,
                     vol.Optional("location"): str,
                     vol.Optional("priority"): int
-                },
+                }},
                 vol.Required("customize_global", default={}): {
                     vol.Optional("domain_favorites"): [str]
                 },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("locations", default=[]): [str]
-            }},
+            },
 
             vol.Required("domains", default={}): {
-                vol.Required("card_size", default="300px"): str,
+                vol.Required("card_size", default=2): int,
                 vol.Required("customize"): {str: {
-                    vol.Optional("card_size"): str,
+                    vol.Optional("card_size"): int,
                     vol.Optional("color"): str,
                     vol.Optional("icon"): str
                 }},
                 vol.Required("customize_global", default={}): {
-                    vol.Required("card_size", default="160px"): str
+                    vol.Required("card_size", default=1): int
                 },
                 vol.Required("exclude", default=[]): [str],
                 vol.Required("favorites", default=[]): [str]

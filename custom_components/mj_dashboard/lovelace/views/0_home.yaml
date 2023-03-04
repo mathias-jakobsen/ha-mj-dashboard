@@ -58,6 +58,9 @@
               cards:
                 - type: custom:button-card
                   template: mj_glance_person_card
+                  tap_action:
+                    action: navigate
+                    navigation_path: /{{ mj.dashboard_url }}/entities_person
 
                 {% if mj.user_config.entities.customize.weather.entity is not none %}
                 - type: custom:button-card
@@ -70,13 +73,6 @@
                   tap_action:
                     action: navigate
                     navigation_path: /{{ mj.dashboard_url }}/entities_light
-
-                - type: custom:button-card
-                  template: mj_glance_card
-                  icon: mdi:cctv
-                  state_display: 1 Streaming
-                  variables:
-                    mj_color: lightblue
 
           - type: custom:layout-card
             layout_type: grid

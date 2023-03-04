@@ -32,13 +32,17 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: repeat(auto-fill, minmax({{ mj.domains.card_size }}, 1fr))
+          grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
           {% for button in mj.user_config.navbar.buttons %}
           {% if loop.index > mj.user_config.navbar.num_buttons_desktop %}
           - type: custom:button-card
+            view_layout:
+              grid-column: auto / span {{ mj.domains.card_size }}
+              show:
+                mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
             template: mj_area_card
             icon: {{ button.icon }}
             name: {{ button.title }}
@@ -48,13 +52,14 @@
               mj_color: {{ button.color }}
               {% endif %}
               mj_navigation_path: {{ button.navigation_path }}
-            view_layout:
-              show:
-                mediaquery: "{{ mj.user_config.mediaquery.desktop }}"
           {% endif %}
 
           {% if loop.index > mj.user_config.navbar.num_buttons_mobile %}
           - type: custom:button-card
+            view_layout:
+              grid-column: auto / span {{ mj.domains.card_size }}
+              show:
+                mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
             template: mj_area_card
             icon: {{ button.icon }}
             name: {{ button.title }}
@@ -64,8 +69,6 @@
               mj_color: {{ button.color }}
               {% endif %}
               mj_navigation_path: {{ button.navigation_path }}
-            view_layout:
-              show:
-                mediaquery: "{{ mj.user_config.mediaquery.mobile }}"
+
           {% endif %}
           {% endfor %}

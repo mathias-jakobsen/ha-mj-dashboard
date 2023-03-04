@@ -1,5 +1,6 @@
 mj_glance_sensor_illuminance_card:
   template: mj_glance_card
+  triggers_update: all
 
   variables:
     mj_color: var(--mj-color-sensor-illuminance)
@@ -8,7 +9,12 @@ mj_glance_sensor_illuminance_card:
   icon: mdi:brightness-5
   state_display: >
     [[[
-      const entity_states = variables.mj_entities.filter(entity_id => ["unknown", "unavailable"].includes(states[entity_id].state) == false).map(entity_id => states[entity_id].state);
+      const entity_states = variables.mj_entities.filter(entity_id => ["unknown", "unavailable"].includes(states[entity_id].state) == false).map(entity_id => parseFloat(states[entity_id].state));
+
+      if (entity_states.length == 0) {
+        return "unknown";
+      }
+
       const state_avg = entity_states.reduce((a, b) => a + b, 0) / entity_states.length;
       return `${state_avg} lx`;
     ]]]

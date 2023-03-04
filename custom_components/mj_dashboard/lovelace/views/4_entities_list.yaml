@@ -38,7 +38,7 @@
         layout_type: grid
         layout:
           grid-gap: var(--mj-layout-grid-gap)
-          grid-template-columns: repeat(auto-fill, minmax({{ domain.card_size }}, 1fr))
+          grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
           margin: 0
           padding: var(--mj-layout-view-padding)
         cards:
@@ -60,6 +60,8 @@
           {% for entity in entities | sort(attribute="name") %}
           {% set device_class_card_template = "mj_" ~ domain.id ~ "_" ~ device_class ~ "_card" %}
           - type: custom:button-card
+            view_layout:
+              grid-column: auto / span {{ domain.card_size }}
             template:
               {% if device_class_card_template in mj.button_card_templates %}
               {{ device_class_card_template }}
