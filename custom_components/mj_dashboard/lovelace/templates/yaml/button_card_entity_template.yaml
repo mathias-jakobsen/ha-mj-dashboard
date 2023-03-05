@@ -1,0 +1,11 @@
+# mj_dashboard
+
+{% set domain_card_template = "mj_" ~ entity.domain ~ "_card" %}
+{% set device_class_card_template = "mj_" ~ entity.domain ~ "_" ~ entity.device_class ~ "_card" %}
+{% if device_class_card_template in mj.button_card_templates %}
+{{ device_class_card_template }}
+{% elif domain_card_template in mj.button_card_templates %}
+{{ domain_card_template }}
+{% else %}
+mj_entity_card
+{% endif %}

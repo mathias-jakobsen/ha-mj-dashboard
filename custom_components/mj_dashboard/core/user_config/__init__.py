@@ -39,7 +39,7 @@ class MJ_UserConfig:
                 vol.Required("customize", default={}): {str: {
                     vol.Optional("color"): str,
                     vol.Optional("domain_favorites"): [str],
-                    vol.Optional("entity_groups"): {str: {str: str}},
+                    vol.Optional("entity_groups"): {str: [str]},
                     vol.Optional("icon"): str,
                     vol.Optional("location"): str,
                     vol.Optional("priority"): int
@@ -53,7 +53,7 @@ class MJ_UserConfig:
 
             vol.Required("domains", default={}): {
                 vol.Required("card_size", default=2): int,
-                vol.Required("customize"): {str: {
+                vol.Required("customize", default={}): {str: {
                     vol.Optional("card_size"): int,
                     vol.Optional("color"): str,
                     vol.Optional("icon"): str

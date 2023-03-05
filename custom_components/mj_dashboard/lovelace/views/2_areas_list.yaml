@@ -44,7 +44,7 @@
                 padding: var(--mj-layout-view-padding)
               cards:
                 {% for group_name, group_entities in area.entity_groups.items() %}
-                {% set domain_ids = mj.entities | selectattr("entity_id", "in", group_entities.values()) | map(attribute="domain") | list %}
+                {% set domain_ids = mj.entities | selectattr("entity_id", "in", group_entities) | map(attribute="domain") | list %}
                 {% set domains = mj.domains | selectattr("id", "in", domain_ids) %}
                 {% set domain_max_card_size = domains | map(attribute="card_size") | max %}
                 - type: custom:layout-card
@@ -56,7 +56,7 @@
                     grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
                     margin: 0
                   cards:
-                    {% for entity_name_key, entity_id in group_entities.items() %}
+                    {% for entity_id in group_entities %}
                     {% set entity = mj.entities.get_by_id(entity_id) %}
                     {% set domain_card_template = "mj_" ~ entity.domain ~ "_card" %}
                     {% set device_class_card_template = "mj_" ~ entity.domain ~ "_" ~ entity.device_class ~ "_card" %}
@@ -72,10 +72,6 @@
                         mj_entity_card
                         {% endif %}
                       entity: {{ entity.entity_id }}
-                      {% set name_translation = "entity_group_" ~ entity_name_key %}
-                      {% if name_translation in mj.translations %}
-                      name: {{ entity_name_key }}
-                      {% endif %}
                     {% endfor %}
                 {% endfor %}
           {% endif %}
@@ -99,10 +95,9 @@
                 - type: custom:layout-card
                   layout_type: grid
                   layout:
-                    grid-gap: var(--mj-layout-grid-gap)
+                    grid-gap: var(--mj-layout-subgrid-gap)
                     grid-template-columns: repeat(auto-fill, minmax(calc({{ mj.user_config.general.base_card_size }} * {{ mj.domains.get_by_id(domain).card_size }}), 1fr))
                     margin: 0
-                    padding: 0
                   cards:
                     - type: custom:button-card
                       view_layout:

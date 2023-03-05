@@ -47,8 +47,8 @@ mj_dashboard: &mj_dashboard
   mj-layout-subgrid-gap-v: 8px
   mj-layout-subgrid-gap: var(--mj-layout-subgrid-gap-v) var(--mj-layout-subgrid-gap-h)
 
-  mj-layout-view-padding-h: 8px
-  mj-layout-view-padding-v: 8px
+  mj-layout-view-padding-h: 10px
+  mj-layout-view-padding-v: 15px
   mj-layout-view-padding: var(--mj-layout-view-padding-v) var(--mj-layout-view-padding-h)
 
   # ---- Colors ------

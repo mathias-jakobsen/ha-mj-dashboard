@@ -45,7 +45,7 @@ class MJ_AreaRegistryEntry:
     _: KW_ONLY
     color: str | None = None
     domain_favorites: list[str] | None = None
-    entity_groups: dict[str, dict[str, str]] | None = None
+    entity_groups: dict[str, list[str]] | None = None
     icon: str | None = None
     location: str | None = None
     priority: int = 1

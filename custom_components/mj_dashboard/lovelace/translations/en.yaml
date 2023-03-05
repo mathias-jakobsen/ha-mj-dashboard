@@ -54,18 +54,6 @@ entities: entities
 
 
 #-----------------------------------------------------------#
-#       Entity Groups
-#-----------------------------------------------------------#
-
-entity_group_climate: Climate
-entity_group_humidity: Humidity
-entity_group_illuminance: Illuminance
-entity_group_light: Lights
-entity_group_media_player: Media Player
-entity_group_temperature: Temperature
-
-
-#-----------------------------------------------------------#
 #       Glances
 #-----------------------------------------------------------#
 
