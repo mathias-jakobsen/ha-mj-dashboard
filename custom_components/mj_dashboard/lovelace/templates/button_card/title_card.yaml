@@ -16,7 +16,7 @@ mj_title_card:
       - background: none
       - border-radius: 0
       - box-shadow: none
-      - margin: 5px 5px 0 5px
+      - margin: 0 0 0 5px
       - padding: 0
       - pointer-events: none
     grid:

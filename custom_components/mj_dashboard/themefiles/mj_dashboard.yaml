@@ -39,9 +39,13 @@ mj_dashboard: &mj_dashboard
   mj-card-title-font-size-secondary: 1em
 
   # ---- Layout ------
-  mj-layout-grid-gap-h: 8px
-  mj-layout-grid-gap-v: 8px
+  mj-layout-grid-gap-h: 12px
+  mj-layout-grid-gap-v: 12px
   mj-layout-grid-gap: var(--mj-layout-grid-gap-v) var(--mj-layout-grid-gap-h)
+
+  mj-layout-subgrid-gap-h: 8px
+  mj-layout-subgrid-gap-v: 8px
+  mj-layout-subgrid-gap: var(--mj-layout-subgrid-gap-v) var(--mj-layout-subgrid-gap-h)
 
   mj-layout-view-padding-h: 8px
   mj-layout-view-padding-v: 8px

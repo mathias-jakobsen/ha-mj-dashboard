@@ -27,15 +27,9 @@
     - type: custom:mod-card
       view_layout:
         grid-area: main
-      style: !include
-        - ../templates/yaml/style_tabbed_card.yaml
-        - hide_header: {{ area.entity_groups is none }}
+      style: !include ../templates/yaml/style_tabbed_card.yaml
       card:
         type: custom:tabbed-card
-        attributes:
-          isFadingIndicator: true
-        options:
-          defaultTabIndex: {{ 1 if area.entity_groups is none else 0 }}
         tabs:
           {% if area.entity_groups is not none %}
           - attributes:
@@ -58,10 +52,9 @@
                     grid-column: auto / span {{ domain_max_card_size }}
                   layout_type: grid
                   layout:
-                    grid-gap: var(--mj-layout-grid-gap)
+                    grid-gap: var(--mj-layout-subgrid-gap)
                     grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
                     margin: 0
-                    padding: 0
                   cards:
                     {% for entity_name_key, entity_id in group_entities.items() %}
                     {% set entity = mj.entities.get_by_id(entity_id) %}
@@ -107,7 +100,7 @@
                   layout_type: grid
                   layout:
                     grid-gap: var(--mj-layout-grid-gap)
-                    grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
+                    grid-template-columns: repeat(auto-fill, minmax(calc({{ mj.user_config.general.base_card_size }} * {{ mj.domains.get_by_id(domain).card_size }}), 1fr))
                     margin: 0
                     padding: 0
                   cards:
@@ -120,8 +113,6 @@
                     {% for entity in entities | sort(attribute="device_class, name") %}
                     {% set device_class_card_template = "mj_" ~ domain ~ "_" ~ entity.device_class ~ "_card" %}
                     - type: custom:button-card
-                      view_layout:
-                        grid-column: auto/span {{ mj.domains.get_by_id(domain).card_size }}
                       template:
                         {% if device_class_card_template in mj.button_card_templates %}
                         {{ device_class_card_template }}

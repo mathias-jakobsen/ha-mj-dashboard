@@ -52,7 +52,7 @@
               layout:
                 grid-auto-columns: max-content
                 grid-auto-flow: column
-                grid-gap: var(--mj-layout-grid-gap)
+                grid-gap: var(--mj-layout-subgrid-gap)
                 margin: 0
                 padding: 0 var(--mj-layout-view-padding-h)
               cards:
@@ -74,11 +74,13 @@
                     action: navigate
                     navigation_path: /{{ mj.dashboard_url }}/entities_light
 
+          {% if mj.user_config.entities.favorites | count > 0 %}
           - type: custom:layout-card
             layout_type: grid
             layout:
-              grid-gap: var(--mj-layout-grid-gap)
-              grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))
+              grid-auto-flow: dense
+              grid-gap: var(--mj-layout-subgrid-gap)
+              grid-template-columns: repeat(auto-fill, minmax({{ mj.user_config.general.base_card_size }}, 1fr))
               margin: 0
               padding: var(--mj-layout-view-padding)
             cards:
@@ -87,3 +89,22 @@
                   grid-column: 1/-1
                 template: mj_title_card
                 label: {{ mj.translations.favorites }}
+
+              {% for entity_id in mj.user_config.entities.favorites %}
+              {% set entity = mj.entities.get_by_id(entity_id) %}
+              {% set domain_card_template = "mj_" ~ entity.domain ~ "_card" %}
+              {% set device_class_card_template = "mj_" ~ entity.domain ~ "_" ~ entity.device_class ~ "_card" %}
+              - type: custom:button-card
+                view_layout:
+                  grid-column: auto / span {{ mj.domains.get_by_id(entity.domain).card_size }}
+                template:
+                  {% if device_class_card_template in mj.button_card_templates %}
+                  {{ device_class_card_template }}
+                  {% elif domain_card_template in mj.button_card_templates %}
+                  {{ domain_card_template }}
+                  {% else %}
+                  mj_entity_card
+                  {% endif %}
+                entity: {{ entity.entity_id }}
+              {% endfor %}
+          {% endif %}
