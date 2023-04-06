@@ -5,12 +5,13 @@ areas:
       location: Test
       color: green
       entity_groups:
-        lights:
-          - light.bathroom_spotlights
         climate:
           - sensor.bathroom_motion_temperature
           - sensor.bathroom_motion_illuminance_lux
-
+          - sensor.bathroom_motion_illuminance_lux
+          - light.bathroom_spotlights
+          - light.bathroom_spotlights
+          - light.bathroom_spotlights
   customize_global:
     domain_favorites:
       - scenes

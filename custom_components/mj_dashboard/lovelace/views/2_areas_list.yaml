@@ -49,7 +49,7 @@
                 {% set domain_max_card_size = domains | map(attribute="card_size") | max %}
                 - type: custom:layout-card
                   view_layout:
-                    grid-column: auto / span {{ domain_max_card_size }}
+                    grid-column: auto / span {{  domain_max_card_size }}
                   layout_type: grid
                   layout:
                     grid-gap: var(--mj-layout-subgrid-gap)
@@ -72,6 +72,7 @@
                         mj_entity_card
                         {% endif %}
                       entity: {{ entity.entity_id }}
+                      name: {{ entity.name | replace(area.name, "") }}
                     {% endfor %}
                 {% endfor %}
           {% endif %}
