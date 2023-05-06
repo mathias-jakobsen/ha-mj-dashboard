@@ -1,0 +1,5 @@
+|
+  .: |
+    paper-icon-item, paper-icon-item:before {
+      border-radius: var(--ha-card-border-radius) !important;
+    }

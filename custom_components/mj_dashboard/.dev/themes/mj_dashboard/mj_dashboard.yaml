@@ -6,6 +6,7 @@ mj_dashboard: &mj_dashboard
   card-mod-theme: mj_dashboard
   card-mod-card-yaml: !include card_mod_card.yaml
   card-mod-more-info-yaml: !include card_mod_more_info.yaml
+  card-mod-sidebar-yaml: !include card_mod_sidebar.yaml
   card-mod-root-yaml: !include card_mod_root.yaml
 
 
