@@ -82,7 +82,7 @@ class MJ_EntityRegistry:
                 entity_category=None,
                 entity_id=state.entity_id,
                 hidden=False,
-                name=state.attributes.get(ATTR_FRIENDLY_NAME, None),
+                name=state.attributes.get(ATTR_FRIENDLY_NAME, ""),
                 unit_of_measurement=state.attributes.get(ATTR_UNIT_OF_MEASUREMENT, None))
 
             if entity := entity_registry.get(state.entity_id):
