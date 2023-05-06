@@ -8,7 +8,7 @@
       transition: none;
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) ha-tabs {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) ha-tabs {
       --paper-tabs-selection-bar-color: transparent;
       color: transparent;
       cursor: pointer;
@@ -16,7 +16,7 @@
       pointer-events: none;
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab {
       font-size: var(--app-toolbar-font-size, 20px);
       font-weight: 400;
       opacity: 0;
@@ -25,22 +25,22 @@
       text-transform: none;
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab.iron-selected {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab.iron-selected {
       left: 0;
       opacity: 1;
       position: absolute;
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab:not(.iron-selected) {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab:not(.iron-selected) {
       display: inline-block;
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab::after {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab::after {
       color: var(--app-header-text-color);
       content: attr(aria-label);
     }
 
-    ha-app-layout:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab ha-icon {
+    >div:has(hui-view[style*="card-mod-theme:mj_dashboard"]) paper-tab ha-icon {
       display: none;
     }
 
